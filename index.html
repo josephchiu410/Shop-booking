@@ -49,8 +49,10 @@ button.chip.on{background:var(--ac);color:#fff;border-color:var(--ac)}button.gho
 </div>
 
 <div id="admin" class="solo hide"><div class="card">
-  <div id="login"><h2>Owner login</h2><p class="hint">Enter your email and we’ll send you a sign-in link. No password.</p>
-    <input id="em" type="email" placeholder="you@shop.com"><div style="margin-top:12px"><button id="mail">Send link</button></div><div id="lm" class="msg"></div></div>
+  <div id="login"><h2>Owner login</h2><p class="hint">Use your email and a password (at least 6 characters). First time? Tap Create account.</p>
+    <label>Email</label><input id="em" type="email" placeholder="you@shop.com" autocomplete="email">
+    <label>Password</label><input id="pw" type="password" autocomplete="current-password">
+    <div style="margin-top:14px;display:flex;gap:8px"><button id="sin">Sign in</button><button id="sup" class="ghost">Create account</button></div><div id="lm" class="msg"></div></div>
   <div id="dash" class="hide"><h2>Your shop</h2>
     <label>Shop name</label><input id="a_name"><label>Link name (letters, no spaces)</label><input id="a_slug">
     <label>Opens (hour 0–23)</label><input id="a_open" type="number"><label>Closes (hour 0–23)</label><input id="a_close" type="number">
@@ -97,7 +99,9 @@ async function startCustomer(){
   $("send").onclick=send;$("inp").onkeydown=e=>{if(e.key==="Enter")send()}}
 async function startAdmin(){
   $("admin").classList.remove("hide");$("title").textContent="Owner dashboard";$("sub").textContent="";
-  $("mail").onclick=async()=>{const{error}=await sb.auth.signInWithOtp({email:$("em").value.trim(),options:{emailRedirectTo:location.origin+location.pathname+"#admin"}});$("lm").textContent=error?error.message:"Check your email for the sign-in link."};
+  const done=r=>{if(r.error){$("lm").className="msg bad";$("lm").textContent=r.error.message}else if(r.data&&r.data.session)location.reload();else{$("lm").className="msg";$("lm").textContent="Account created. Now tap Sign in."}};
+  $("sin").onclick=async()=>done(await sb.auth.signInWithPassword({email:$("em").value.trim(),password:$("pw").value}));
+  $("sup").onclick=async()=>done(await sb.auth.signUp({email:$("em").value.trim(),password:$("pw").value}));
   const{data:{session}}=await sb.auth.getSession();if(!session)return;
   $("login").classList.add("hide");$("dash").classList.remove("hide");
   const{data:s}=await sb.from("shops").select("*").eq("owner",session.user.id).maybeSingle();
