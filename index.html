@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Slotwise: booking and AI receptionist</title>
+<title>Hushdesk: booking and AI receptionist</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@1&family=Playfair+Display:wght@700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -106,30 +106,47 @@ details{background:#fff;border:1px solid var(--line);border-radius:20px;padding:
 .foot{text-align:center;color:var(--mute);font-size:13px;padding:0 20px 40px}
 .js .rv{opacity:0;transform:translateY(34px);transition:opacity .8s,transform .8s cubic-bezier(.2,.7,.2,1)}.js .rv.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.orb,.mq div,.cue:after{animation:none}.js .rv{opacity:1;transform:none}}
+
+.lhero{display:block;text-align:left;min-height:100vh;padding:0;background:#fff;overflow:hidden}
+.dial{position:absolute;right:-9%;top:50%;width:min(820px,78vw);margin-top:-30px;transform:translateY(-50%);pointer-events:none}.dial svg{width:100%;display:block;animation:spin 140s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.hin{display:grid;grid-template-columns:1.08fr .92fr;gap:40px;align-items:center;max-width:1180px;margin:0 auto;padding:64px 24px 90px;position:relative;z-index:1}
+@media(max-width:900px){.hin{grid-template-columns:1fr;padding-top:36px}}
+.eyebrow{font-size:13px;font-weight:600;color:var(--mute);margin-bottom:22px;display:flex;align-items:center;gap:12px}.eyebrow:before{content:"";width:34px;height:2px;background:var(--ac)}
+.lhero h1{font:700 clamp(44px,6.8vw,96px)/.98 Inter,sans-serif;letter-spacing:-.055em;margin:0 0 22px;text-align:left}.lhero h1 .ser{display:block}
+.lead{margin:0;max-width:500px}.cta-row{justify-content:flex-start;align-items:center;margin:30px 0 14px}.lnk{font-weight:600;cursor:pointer;color:var(--ink);border-bottom:1.5px solid var(--ac);padding-bottom:2px}.lnk:hover{color:#2f8fd8}
+.fine{font-size:13.5px;color:var(--mute);margin:0 0 28px}.tryrow small{display:block;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-bottom:10px}
+.dots{position:fixed;right:18px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:14px;z-index:25}@media(max-width:900px){.dots{display:none}}
+.dots button{width:9px;height:9px;padding:0;border-radius:50%;background:#bcd9f1;box-shadow:none;transition:.25s}.dots button:hover{transform:scale(1.5);background:var(--ac)}.dots button.on{background:#2f8fd8;transform:scale(1.6)}
+.nav>div .lnk{border:0;margin-left:auto;padding:0;font-size:14px;font-weight:600;color:var(--mute)}
+.nav a:not(.lnk){margin-left:auto}
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}.s2{grid-column:span 2}.s4{grid-column:span 4}.s6{grid-column:span 6}@media(max-width:860px){.s2,.s4,.s6{grid-column:span 6}}
+.bt{background:#fff;border:1px solid var(--line);border-radius:30px;padding:30px;display:flex;flex-direction:column;justify-content:space-between;min-height:250px;transition:.3s}.bt:hover{transform:translateY(-5px);box-shadow:0 30px 50px -32px var(--glow)}
+.bt.dark{background:linear-gradient(135deg,#0b2540,#17406b);color:#fff;border-color:transparent}.bt b{font-size:22px;letter-spacing:-.03em;display:block;margin-bottom:6px}.bt p{color:var(--mute);margin:0;max-width:420px}.bt.dark p{color:rgba(255,255,255,.75)}
+.mini{display:flex;flex-direction:column;gap:7px;margin-top:22px}.mb{align-self:flex-start;background:rgba(255,255,255,.14);padding:9px 14px;border-radius:16px;font-size:13.5px}.mb.u{align-self:flex-end;background:linear-gradient(110deg,#5ab4ee,#a8dcfa);color:#0b2540}
+.dotrow{display:flex;gap:8px;margin-top:22px}.dotrow i{width:28px;height:28px;border-radius:50%;background:var(--c)}
+.slots{display:flex;gap:6px;margin-top:22px;flex-wrap:wrap}.slots i{font-style:normal;font-size:12px;font-weight:600;padding:6px 11px;border-radius:99px;border:1.5px solid var(--line)}.slots i.x{text-decoration:line-through;color:#9bb0c4;background:var(--soft)}
+.lines{margin-top:22px;display:grid;gap:8px}.lines i{height:10px;border-radius:6px;background:var(--bot)}.lines i:nth-child(1){width:90%}.lines i:nth-child(2){width:64%}.lines i:nth-child(3){width:78%}
 </style>
 </head><body>
 <div class="hero hide" id="hero"><div class="logo hide" id="logo"></div><div class="pill" id="pill">Online booking</div><h1 id="title">Book online</h1><p id="sub"></p></div>
 <div id="land" class="hide">
-<div class="nav"><div><div class="brand" onclick="location.hash=''"><i></i>Slotwise</div><a onclick="go('story')">A day with Slotwise</a><a onclick="go('try')">Try it</a><a onclick="go('brand')">Customize</a><a onclick="go('faq')">FAQ</a><button onclick="location.hash='admin'">Owner login</button></div></div>
-
-<div class="lhero"><div class="orb o1"></div><div class="orb o2"></div>
-  <div class="hin" id="hin"><span class="tag">AI receptionist and online booking</span>
-  <h1>The front desk that <span class="ser grad">never sleeps.</span></h1>
-  <p class="lead">Slotwise answers your customers, books their appointments, and keeps working nights, weekends, and holidays, so you never lose a booking.</p>
-  <div class="cta-row"><button onclick="location.hash='admin'">Set up my shop, free</button><button class="ghost" onclick="go('story')">Watch a day unfold</button></div>
-  <div class="trust"><span>Free during early access</span><span>Live in 5 minutes</span><span>Your own booking link</span></div></div>
-  <div class="cue">Scroll</div></div>
+<div class="nav"><div><div class="brand" onclick="location.hash=''"><i></i>Hushdesk</div><a onclick="location.hash='admin'">Owner login</a><button onclick="location.hash='admin'">Get started</button></div></div>
+<div class="dots" id="dots"></div>
+<div class="lhero" id="top"><div class="dial"><svg viewBox="0 0 600 600"><circle cx="300" cy="300" r="286" fill="none" stroke="#a9d7f5" stroke-width="12" stroke-dasharray="2 27.9"/><circle cx="300" cy="300" r="238" fill="none" stroke="#d3eafb" stroke-width="1.5"/><circle cx="300" cy="300" r="190" fill="none" stroke="#d3eafb" stroke-width="1.5"/><circle cx="300" cy="300" r="142" fill="none" stroke="#e4f2fd" stroke-width="1.5"/></svg></div>
+  <div class="hin" id="hin"><div class="hl"><div class="eyebrow">AI receptionist and online booking</div>
+  <h1>Your shop closes. <span class="ser grad">Your front desk doesn’t.</span></h1>
+  <p class="lead">Hushdesk answers your customers and books their appointments while you sleep, work, or take a day off.</p>
+  <div class="cta-row"><button onclick="location.hash='admin'">Set up my shop, free</button><a class="lnk" onclick="go('story')">See a day at the shop ↓</a></div>
+  <p class="fine">Free during early access. Live in about five minutes.</p>
+  <div class="tryrow"><small>Try it as a customer of a</small><div class="chips" id="biz"></div></div></div>
+  <div class="demo" id="demo"><div class="dh"><div class="av" id="dAv">F</div><div><b id="dName">Fade Factory</b><span>Online now · replies in seconds</span></div></div><div class="dm" id="dm"></div><div class="dc" id="dc"></div></div></div></div>
 
 <div class="story" id="story"><div class="stage" id="stage"><div class="bgd"></div><div class="bgn" id="bgn"></div>
-  <div class="sg"><div><div class="kick" style="color:inherit;opacity:.7">A day with Slotwise</div><div class="clk" id="clk">8:00 AM</div><div class="cap" id="cap"></div><div class="cnt">Bookings captured while you were away <b id="cn">0</b></div></div>
-  <div class="sp"><div class="dh"><div class="av">S</div><div><b>Your shop</b><span>Slotwise is online</span></div></div><div class="sm" id="sm"></div></div></div>
+  <div class="sg"><div><div class="kick" style="color:inherit;opacity:.7">A day with Hushdesk</div><div class="clk" id="clk">8:00 AM</div><div class="cap" id="cap"></div><div class="cnt">Bookings captured while you were away <b id="cn">0</b></div></div>
+  <div class="sp"><div class="dh"><div class="av">S</div><div><b>Your shop</b><span>Hushdesk is online</span></div></div><div class="sm" id="sm"></div></div></div>
   <div class="pg" id="pg"></div></div></div>
 
-<div class="lw" id="try"><div class="sec try"><div class="kick rv">Try it yourself</div><h2 class="t rv">Be the customer.</h2><p class="s rv">Pick a type of business, then tap a question. This is how your customers will experience Slotwise.</p>
-  <div class="chips rv" id="biz"></div>
-  <div class="demo rv" id="demo"><div class="dh"><div class="av" id="dAv">F</div><div><b id="dName">Fade Factory</b><span>Online now · replies in seconds</span></div></div><div class="dm" id="dm"></div><div class="dc" id="dc"></div></div></div></div>
-
-<div class="sec" style="padding-bottom:0"><div class="kick rv">How it works</div><h2 class="t rv">Live in three steps.</h2><p class="s rv">No developers and no complicated software.</p></div>
+<div class="sec" id="how" style="padding-bottom:0"><div class="kick rv">How it works</div><h2 class="t rv">Live in three steps.</h2><p class="s rv">No developers and no complicated software.</p></div>
 <div class="stack"><div class="sc" style="--i:0"><div class="n">01</div><div><h3>Tell us about your business</h3><p>Add your hours, services, prices, and the questions customers always ask.</p></div></div>
   <div class="sc" style="--i:1"><div class="n">02</div><div><h3>Make it yours</h3><p>Pick your colors, font, and logo. Your page looks like your brand, not ours.</p></div></div>
   <div class="sc" style="--i:2"><div class="n">03</div><div><h3>Share your link</h3><p>Add it to your Instagram bio or Google profile. Customers can book and chat any time.</p></div></div></div>
@@ -137,16 +154,18 @@ details{background:#fff;border:1px solid var(--line);border-radius:20px;padding:
 <div class="band" id="live"><div class="sec"><div class="clock"><div class="rv"><div class="kick">Always on</div><div class="big24">24/7</div>
   <h2 class="t">Customers don’t book on your schedule.</h2><p class="s" style="margin-bottom:0">Most people send messages after hours, on weekends, or while you’re busy with a client. Drag the slider to see who’s covering your shop.</p></div>
   <div class="panel rv"><div class="time" id="tm">11:47 PM</div><input type="range" id="sl" min="0" max="1439" value="1427" aria-label="Time of day">
-  <div class="st"><span>Your shop (open 10am to 7pm)</span><span class="pl c" id="s1">Closed</span></div><div class="st"><span>Slotwise</span><span class="pl o">Online</span></div>
+  <div class="st"><span>Your shop (open 10am to 7pm)</span><span class="pl c" id="s1">Closed</span></div><div class="st"><span>Hushdesk</span><span class="pl o">Online</span></div>
   <div class="say" id="say"></div></div></div></div></div>
 
-<div class="sec"><div class="kick rv">What you get</div><h2 class="t rv">One link. <span class="ser grad">Fewer missed customers.</span></h2><p class="s rv">Everything you need to take bookings without hiring anyone.</p>
-  <div class="g3"><div class="fc rv"><em>One</em><b>Online booking page</b><p>Customers pick a service, day, and time in seconds. Taken times disappear automatically.</p></div>
-  <div class="fc rv"><em>Two</em><b>AI receptionist</b><p>Answers questions about prices, hours, and policies, then books the appointment.</p></div>
-  <div class="fc rv"><em>Three</em><b>Your own brand</b><p>Custom colors, fonts, logo, tagline, and greeting. Your shop stays front and center.</p></div>
-  <div class="fc rv"><em>Four</em><b>No double-booking</b><p>A time can only be booked once, whether the customer uses the page or the chat.</p></div>
-  <div class="fc rv"><em>Five</em><b>Owner dashboard</b><p>See upcoming bookings, cancel in one tap, and update your services at any time.</p></div>
-  <div class="fc rv"><em>Six</em><b>Works on any phone</b><p>Customers don’t need to download an app. They just open your link.</p></div></div></div>
+<div class="sec" id="feat"><div class="kick rv">What you get</div><h2 class="t rv">One link. <span class="ser grad">Fewer missed customers.</span></h2><p class="s rv">Everything you need to take bookings without hiring anyone.</p>
+  <div class="bento">
+  <div class="bt dark s4 rv"><div><b>AI receptionist</b><p>Answers questions about prices, hours, and policies, then books the appointment. It never makes things up.</p></div><div class="mini"><div class="mb u">Do you have anything Saturday?</div><div class="mb">Yes! 10:00am and 11:30am are open.</div></div></div>
+  <div class="bt s2 rv"><div><b>Online booking page</b><p>Pick a service, day, and time in seconds.</p></div><div class="slots"><i>Tue</i><i>Wed</i><i>Thu</i><i>Fri</i></div></div>
+  <div class="bt s2 rv"><div><b>Your own brand</b><p>Colors, fonts, logo, and greeting.</p></div><div class="dotrow"><i style="--c:#5ab4ee"></i><i style="--c:#0b2540"></i><i style="--c:#e11d48"></i><i style="--c:#ea580c"></i></div></div>
+  <div class="bt s2 rv"><div><b>No double-booking</b><p>A time can only be booked once.</p></div><div class="slots"><i>10:00</i><i class="x">10:30</i><i>11:00</i><i class="x">11:30</i></div></div>
+  <div class="bt s2 rv"><div><b>Owner dashboard</b><p>See bookings and cancel in one tap.</p></div><div class="lines"><i></i><i></i><i></i></div></div>
+  <div class="bt dark s6 rv" style="min-height:200px"><div><b style="font-size:clamp(24px,3.4vw,40px)">Works on any phone.</b><p>Customers don’t download an app. They just open your link.</p></div></div>
+  </div></div>
 
 <div class="lw" id="brand"><div class="sec"><div class="cus"><div class="rv"><div class="kick">Make it yours</div><h2 class="t">Your name. Your colors. <span class="ser grad">Your look.</span></h2><p class="s">Try it now. Type your business name, pick a color, and choose a font style.</p>
   <label style="margin-top:0">Business name</label><input id="pvIn" value="Your Business" maxlength="28">
@@ -155,17 +174,17 @@ details{background:#fff;border:1px solid var(--line);border-radius:20px;padding:
   <div class="pv rv" id="pv" style="--ac:#5ab4ee"><div class="top"><div class="logo" id="pvL">Y</div><h3 id="pvN">Your Business</h3><span>Book online in seconds</span></div>
   <div class="bd"><div class="chips"><button class="chip on">Tue 12</button><button class="chip">Wed 13</button><button class="chip">Thu 14</button></div><div class="chips" style="margin-bottom:18px"><button class="chip">10:00 AM</button><button class="chip on">11:30 AM</button><button class="chip">1:00 PM</button></div><button class="big" style="margin-top:0">Confirm booking</button></div></div></div></div></div>
 
-<div class="sec" style="padding-left:0;padding-right:0"><div style="padding:0 20px"><div class="kick rv">Who it’s for</div><h2 class="t rv">Any business that <span class="ser grad">takes appointments.</span></h2><p class="s rv">If customers book a time with you, Slotwise works for you.</p></div>
+<div class="sec" style="padding-left:0;padding-right:0"><div style="padding:0 20px"><div class="kick rv">Who it’s for</div><h2 class="t rv">Any business that <span class="ser grad">takes appointments.</span></h2><p class="s rv">If customers book a time with you, Hushdesk works for you.</p></div>
   <div class="mq"><div id="r1"></div></div><div class="mq r"><div id="r2"></div></div></div>
 
 <div class="lw" id="faq"><div class="sec" style="max-width:820px"><div class="kick rv">Questions</div><h2 class="t rv">Good to know.</h2><p class="s"></p>
   <details class="rv"><summary>Do my customers need an account?</summary><p>No. They open your link, pick a time, and enter their name and phone number.</p></details>
   <details class="rv"><summary>What if the AI doesn’t know the answer?</summary><p>It answers only from the information you give it and never makes up prices or policies. If it’s unsure, it tells the customer that you will follow up.</p></details>
-  <details class="rv"><summary>Is it really free?</summary><p>Yes. Slotwise is free during early access, so you can try it with real customers.</p></details>
+  <details class="rv"><summary>Is it really free?</summary><p>Yes. Hushdesk is free during early access, so you can try it with real customers.</p></details>
   <details class="rv"><summary>Can I change my services and hours later?</summary><p>Yes. Update anything in your owner dashboard, and your booking page changes right away.</p></details></div></div>
 
 <div class="lw"><div class="fin"><div class="rv"><h2>Stop losing bookings <span class="ser" style="color:#a8dcfa">after hours.</span></h2><p>Set up your shop in about five minutes and get your own booking link.</p><button onclick="location.hash='admin'">Set up my shop, free</button></div></div>
-<div class="foot">© 2026 Slotwise. Booking and AI receptionist.</div></div>
+<div class="foot">© 2026 Hushdesk. Booking and AI receptionist.</div></div>
 </div>
 
 <div id="cust" class="wrap hide">
@@ -266,7 +285,7 @@ async function startAdmin(){
       x.onclick=async()=>{await sb.from("bookings").delete().eq("id",b.id);loadBk()};r.append(t,x);$("bks").appendChild(r)})}
   loadBk()}
 function route(){$("hero").classList.toggle("hide",!slug&&location.hash!=="#admin");["land","cust","admin"].forEach(i=>$(i).classList.add("hide"));
-  if(slug)startCustomer();else if(location.hash==="#admin")startAdmin();else{$("land").classList.remove("hide");$("title").textContent="Booking + AI receptionist";$("sub").textContent="Built for any business that takes appointments.";$("pill").textContent="Slotwise"}}
+  if(slug)startCustomer();else if(location.hash==="#admin")startAdmin();else{$("land").classList.remove("hide");$("title").textContent="Booking + AI receptionist";$("sub").textContent="Built for any business that takes appointments.";$("pill").textContent="Hushdesk"}}
 const go=id=>document.getElementById(id).scrollIntoView({behavior:"smooth"});
 addEventListener("hashchange",()=>location.reload());
 document.documentElement.classList.add("js");
@@ -281,7 +300,7 @@ function initLanding(){
     [.9,"me","Can I move my Friday appointment to Thursday?"],[.93,"bot","Done. You’re now booked for Thursday at 2:00pm."]];
   const sm=$("sm"),bubs=EV.map(([t,r,x])=>{const d=document.createElement("div");d.className="b "+r;d.textContent=x;sm.appendChild(d);return d});
   const story=$("story"),stage=$("stage"),land=$("land"),hin=$("hin");
-  const CAP=[[.3,"Morning rush. You’re with a client, and Slotwise handles the messages."],[.5,"The shop closes at 7pm, but customers keep asking questions."],[.85,"It’s the middle of the night. You’re asleep, and Slotwise is still answering."],[2,"Morning. New bookings are already waiting for you."]];
+  const CAP=[[.3,"Morning rush. You’re with a client, and Hushdesk handles the messages."],[.5,"The shop closes at 7pm, but customers keep asking questions."],[.85,"It’s the middle of the night. You’re asleep, and Hushdesk is still answering."],[2,"Morning. New bookings are already waiting for you."]];
   function tick(){if(land.classList.contains("hide"))return;
     const vh=innerHeight,y=scrollY,p1=clamp(y/(vh*.8),0,1);hin.style.transform="translateY("+(y*.3)+"px) scale("+(1-.1*p1)+")";hin.style.opacity=String(1-p1*1.15);
     const r=story.getBoundingClientRect(),p=clamp(-r.top/(r.height-vh),0,1);
@@ -310,7 +329,7 @@ function initLanding(){
   /* 24/7 slider */
   const sl=$("sl");
   function clock(){const m=+sl.value,open=m>=600&&m<1140;$("tm").textContent=fmtT(m);$("s1").textContent=open?"Open":"Closed";$("s1").className="pl "+(open?"o":"c");
-    $("say").textContent=open?"You’re busy with a client. Slotwise answers new messages and books appointments, so nobody waits.":"Your shop is closed, but a customer just asked about Saturday. Slotwise replied in seconds and booked them in."}
+    $("say").textContent=open?"You’re busy with a client. Hushdesk answers new messages and books appointments, so nobody waits.":"Your shop is closed, but a customer just asked about Saturday. Hushdesk replied in seconds and booked them in."}
   sl.oninput=clock;clock();
   /* customizer */
   const sw=$("sw"),pv=$("pv");["#5ab4ee","#0b2540","#e11d48","#ea580c","#16a34a"].forEach((c,i)=>{const b=document.createElement("button");b.style.setProperty("--c",c);b.className=i?"":"on";b.setAttribute("aria-label","Color "+c);
@@ -318,6 +337,11 @@ function initLanding(){
   [["Modern","Inter"],["Elegant","'Playfair Display'"],["Friendly","Poppins"]].forEach(([n,f],i)=>{const b=document.createElement("button");b.className="chip"+(i?"":" on");b.textContent=n;
     b.onclick=()=>{pv.style.fontFamily=f+",sans-serif";pv.querySelector("h3").style.fontFamily=f+",sans-serif";$("fo").querySelectorAll("button").forEach(x=>x.classList.remove("on"));b.classList.add("on")};$("fo").appendChild(b)});
   $("pvIn").oninput=e=>{const v=e.target.value.trim()||"Your Business";$("pvN").textContent=v;$("pvL").textContent=v[0].toUpperCase()};
+
+  const SEC=[["top","Top"],["story","A day"],["how","How it works"],["live","24/7"],["feat","Features"],["brand","Customize"],["faq","FAQ"]],dd=$("dots");
+  SEC.forEach(([id,t])=>{const b=document.createElement("button");b.title=t;b.setAttribute("aria-label",t);b.onclick=()=>go(id);b.dataset.id=id;dd.appendChild(b)});
+  const io2=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting)dd.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.id===x.target.id))}),{rootMargin:"-45% 0px -50% 0px"});
+  SEC.forEach(([id])=>{const e=document.getElementById(id);if(e)io2.observe(e)});
   /* who it's for */
   const R1=["💈 Barbers","💅 Salons","🧖 Spas","🏋️ Trainers","🦷 Clinics","🎓 Tutors"],R2=["🐶 Pet groomers","📸 Photographers","🧘 Studios","🧹 Cleaners","💼 Consultants","🔧 Mechanics"];
   [["r1",R1],["r2",R2]].forEach(([id,a])=>{$(id).innerHTML=a.concat(a).map(t=>"<span>"+t+"</span>").join("")})
