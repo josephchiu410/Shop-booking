@@ -1,64 +1,179 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Book online</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Slotwise: booking and AI receptionist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@1&family=Playfair+Display:wght@700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--bg:#f4f3ef;--card:#fff;--ink:#14141c;--mute:#6b6b78;--line:#e8e6df;--ac:#6d5efc;--ac2:#c04bff;--glow:rgba(109,94,252,.28);--ok:#15803d;--bad:#c2410c;--bot:#f1efe9;--hero1:#14122b;--hero2:#2a1b5e}
-@media(prefers-color-scheme:dark){:root{--bg:#0c0b12;--card:#16151f;--ink:#f4f3f8;--mute:#9b9aab;--line:#272633;--ac:#8b7dff;--ac2:#d46bff;--glow:rgba(139,125,255,.3);--ok:#4ade80;--bad:#fb923c;--bot:#201f2b;--hero1:#0c0b12;--hero2:#1e1647}}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--fb,Inter),system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-.hero{position:relative;overflow:hidden;background:radial-gradient(900px 400px at 80% -10%,rgba(192,75,255,.35),transparent),radial-gradient(700px 400px at 10% 0,rgba(109,94,252,.4),transparent),linear-gradient(160deg,var(--hero1),var(--hero2));color:#fff;padding:54px 20px 96px;text-align:center}
-.hero h1,h2{font-family:var(--fh,Inter),system-ui,sans-serif}.logo{width:64px;height:64px;border-radius:20px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);display:grid;place-items:center;font-size:32px;margin:0 auto 14px;backdrop-filter:blur(8px)}.hero h1{margin:0 0 8px;font-size:clamp(30px,6vw,50px);font-weight:800;letter-spacing:-.035em;line-height:1.08}
-.hero p{margin:0 auto;max-width:520px;color:rgba(255,255,255,.78);font-size:16px}
-.pill{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(8px);padding:5px 14px;border-radius:99px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
-.wrap{max-width:1020px;margin:-62px auto 48px;padding:0 16px;display:grid;grid-template-columns:1.1fr 1fr;gap:20px;position:relative}
-@media(max-width:800px){.wrap{grid-template-columns:1fr}}
-.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:26px;box-shadow:0 20px 50px -20px rgba(20,18,43,.35)}
-h2{font-size:18px;margin:0 0 4px;font-weight:700;letter-spacing:-.01em}
-.sub2{color:var(--mute);font-size:13px;margin:0 0 6px}
+:root{--bg:#fff;--soft:#f3f8fd;--card:#fff;--ink:#0b1b2e;--mute:#5a6b80;--line:#dfebf6;--ac:#5ab4ee;--ac2:#a8dcfa;--on:#0b2540;--glow:rgba(90,180,238,.4);--ok:#15803d;--bad:#c2410c;--bot:#edf5fc;--hero1:#0b2540;--hero2:#2f7fc1}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--soft);color:var(--ink);font:15px/1.6 var(--fb,Inter),system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--fh,'Inter'),system-ui,sans-serif}
+.hero{background:linear-gradient(135deg,var(--hero1),var(--hero2));color:#fff;padding:50px 20px 96px;text-align:center}
+.hero h1{margin:0 0 8px;font-size:clamp(30px,6vw,48px);font-weight:800;letter-spacing:-.03em;line-height:1.1}.hero p{margin:0 auto;max-width:520px;color:rgba(255,255,255,.82);font-size:16px}
+.pill{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);padding:5px 14px;border-radius:99px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.logo{width:64px;height:64px;border-radius:20px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);display:grid;place-items:center;font-size:30px;font-weight:700;margin:0 auto 14px}
+.wrap{max-width:1020px;margin:-62px auto 48px;padding:0 16px;display:grid;grid-template-columns:1.1fr 1fr;gap:20px;position:relative}@media(max-width:800px){.wrap{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:26px;box-shadow:0 20px 50px -24px rgba(15,23,42,.25)}
+h2{font-size:18px;margin:0 0 4px;font-weight:700;letter-spacing:-.01em}.sub2{color:var(--mute);font-size:13px;margin:0 0 6px}
 label{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--mute);margin:20px 0 8px;text-transform:uppercase;letter-spacing:.06em}
-input,textarea,select{width:100%;background:var(--bg);color:var(--ink);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;font:inherit;transition:.15s}
-input:focus,textarea:focus,select:focus{outline:0;border-color:var(--ac);box-shadow:0 0 0 4px var(--glow)}
-textarea{min-height:90px}
-button{font:inherit;font-weight:700;border:0;border-radius:14px;padding:12px 20px;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--ac),var(--ac2));box-shadow:0 8px 20px -8px var(--glow);transition:.15s}
-button:hover{transform:translateY(-1px);filter:brightness(1.06)}button:active{transform:none}button:disabled{opacity:.5}
-button.chip{background:var(--bg);color:var(--ink);border:1.5px solid var(--line);padding:9px 14px;font-weight:600;box-shadow:none;border-radius:99px}
-button.chip:hover{border-color:var(--ac)}button.chip.on{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border-color:transparent;box-shadow:0 6px 16px -6px var(--glow)}
-button.ghost{background:transparent;color:var(--ac);border:1.5px solid var(--line);box-shadow:none}
-.chips{display:flex;flex-wrap:wrap;gap:8px}.msg{font-size:14px;margin-top:12px;font-weight:500}.ok{color:var(--ok)}.bad{color:var(--bad)}.hint{color:var(--mute);font-size:13px}
-.big{width:100%;padding:15px;font-size:16px;margin-top:6px}
+input,textarea,select{width:100%;background:var(--soft);color:var(--ink);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;font:inherit;transition:.15s}
+input:focus,textarea:focus,select:focus{outline:0;border-color:var(--ac);box-shadow:0 0 0 4px var(--glow);background:#fff}textarea{min-height:90px}
+button{font:inherit;font-weight:700;border:0;border-radius:14px;padding:12px 20px;cursor:pointer;color:var(--on,#0b2540);background:linear-gradient(110deg,var(--ac),var(--ac2),var(--ac));background-size:220% 100%;background-position:0 0;box-shadow:0 10px 22px -10px var(--glow);transition:background-position .5s,transform .15s,box-shadow .2s}
+button:hover{background-position:100% 0;transform:translateY(-2px);box-shadow:0 14px 26px -10px var(--glow)}button:active{transform:none}button:disabled{opacity:.5;transform:none}
+button.chip{background:#fff;color:var(--ink);border:1.5px solid var(--line);padding:9px 14px;font-weight:600;box-shadow:none;border-radius:99px}button.chip:hover{border-color:var(--ac);color:var(--ac)}
+button.chip.on{background:linear-gradient(110deg,var(--ac),var(--ac2));color:var(--on,#0b2540);border-color:transparent}
+button.ghost{background:#fff;color:var(--ac);border:1.5px solid var(--line);box-shadow:none}button.ghost:hover{border-color:var(--ac)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.msg{font-size:14px;margin-top:12px;font-weight:500}.ok{color:var(--ok)}.bad{color:var(--bad)}.hint{color:var(--mute);font-size:13px}.big{width:100%;padding:15px;font-size:16px;margin-top:6px}
 .chat{height:440px;display:flex;flex-direction:column;margin-top:12px}.msgs{flex:1;overflow:auto;display:flex;flex-direction:column;gap:10px;padding:4px 2px 8px}
-.b{max-width:86%;padding:10px 14px;border-radius:20px;white-space:pre-wrap;font-size:14px}.b.me{align-self:flex-end;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border-bottom-right-radius:6px}.b.bot{align-self:flex-start;background:var(--bot);border-bottom-left-radius:6px}
+.b{max-width:86%;padding:10px 14px;border-radius:20px;white-space:pre-wrap;font-size:14px}.b.me{align-self:flex-end;background:linear-gradient(110deg,var(--ac),var(--ac2));color:var(--on,#0b2540);border-bottom-right-radius:6px}.b.bot{align-self:flex-start;background:var(--bot);border-bottom-left-radius:6px}
 .row{display:flex;gap:8px;margin-top:10px}.row input{flex:1;border-radius:99px}.row button{border-radius:99px}
-.ai{display:flex;align-items:center;gap:12px}.av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));display:grid;place-items:center;color:#fff;font-weight:800;font-size:13px}
-.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px}
+.ai{display:flex;align-items:center;gap:12px}.av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));display:grid;place-items:center;color:var(--on,#0b2540);font-weight:800;font-size:13px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px}
 .bk{display:flex;justify-content:space-between;gap:10px;align-items:center;border-bottom:1px solid var(--line);padding:12px 0;font-size:14px}
 .solo{max-width:600px;margin:-62px auto 48px;padding:0 16px;position:relative}.hide{display:none!important}
-.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0}
-@media(max-width:700px){.feats{grid-template-columns:1fr}}
-.feat{background:var(--bg);border:1px solid var(--line);border-radius:18px;padding:16px}.feat b{display:block;margin:6px 0 2px}.feat span{font-size:26px}
-.feat p{margin:0;color:var(--mute);font-size:13px}
-</style></head><body>
-<div class="hero"><div class="logo hide" id="logo"></div><div class="pill" id="pill">Online booking</div><h1 id="title">Book online</h1><p id="sub"></p></div>
 
-<div id="land" class="solo hide"><div class="card">
-  <h2>Never miss a booking again</h2>
-  <p class="sub2">Your own booking page, plus an AI receptionist that answers customers and books them in, 24/7.</p>
-  <div class="feats">
-    <div class="feat"><span>📅</span><b>Online booking</b><p>Customers pick a time in seconds.</p></div>
-    <div class="feat"><span>🤖</span><b>AI receptionist</b><p>Answers questions and books for you.</p></div>
-    <div class="feat"><span>⚡</span><b>5-minute setup</b><p>Add your hours and services. Done.</p></div>
-  </div>
-  <button class="big" onclick="location.hash='admin';route()">Set up my shop</button>
-</div></div>
+.ser{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.01em}
+.grad{background:linear-gradient(90deg,#2f8fd8,#8fd3fb);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nav{position:sticky;top:12px;z-index:30;max-width:1080px;width:calc(100% - 24px);margin:12px auto 0}
+.nav>div{display:flex;align-items:center;gap:22px;padding:9px 10px 9px 20px;background:rgba(255,255,255,.78);backdrop-filter:blur(18px) saturate(1.6);border:1px solid rgba(11,37,64,.08);border-radius:99px;box-shadow:0 12px 40px -18px rgba(11,37,64,.3)}
+.brand{font:700 20px Inter,sans-serif;letter-spacing:-.04em;display:flex;align-items:center;gap:9px;cursor:pointer;margin-right:auto}
+.brand i{width:26px;height:26px;border-radius:9px;background:linear-gradient(135deg,var(--ac),var(--ac2));position:relative}.brand i:after{content:"";position:absolute;inset:8px;border-radius:50%;background:#fff}
+.nav a{font-weight:500;color:var(--mute);cursor:pointer;font-size:14px}.nav a:hover{color:var(--ink)}@media(max-width:760px){.nav a{display:none}}
+.nav button{padding:9px 18px;font-size:14px;border-radius:99px}
+.lw{background:#fff}.sec{max-width:1120px;margin:0 auto;padding:110px 20px}
+.kick{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#2f8fd8;margin-bottom:14px}
+.sec h2.t,.fin h2,.stage h2{font-size:clamp(34px,5.4vw,64px);line-height:1.02;font-weight:700;letter-spacing:-.045em;margin:0 0 16px}
+.sec p.s{color:var(--mute);font-size:19px;max-width:620px;margin:0 0 46px}
+.lhero{position:relative;overflow:hidden;min-height:calc(100vh - 20px);display:grid;place-items:center;text-align:center;padding:60px 20px 80px;background:radial-gradient(900px 500px at 50% 0,#e3f3fe,transparent),#fff}
+.orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.7;animation:fl 12s ease-in-out infinite}.o1{width:420px;height:420px;background:#bfe6fc;left:-120px;top:10%}.o2{width:380px;height:380px;background:#d6eefe;right:-100px;bottom:5%;animation-delay:-5s}
+@keyframes fl{50%{transform:translate(40px,-30px) scale(1.08)}}
+.hin{position:relative;max-width:1000px;will-change:transform,opacity}
+.tag{display:inline-block;background:#fff;border:1px solid var(--line);color:var(--mute);font-weight:600;font-size:13px;padding:7px 16px;border-radius:99px;margin-bottom:28px;box-shadow:0 6px 20px -10px rgba(11,37,64,.2)}
+.lhero h1{font:700 clamp(48px,9.4vw,124px)/.96 Inter,sans-serif;letter-spacing:-.06em;margin:0 0 26px}
+.lead{font-size:clamp(17px,2vw,22px);color:var(--mute);max-width:620px;margin:0 auto}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:34px 0 20px}.cta-row button{padding:17px 30px;font-size:16px;border-radius:99px}
+.trust{font-size:13.5px;color:var(--mute);display:flex;gap:20px;flex-wrap:wrap;justify-content:center}.trust span:before{content:"✓ ";color:#2f8fd8;font-weight:800}
+.cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);display:flex;flex-direction:column;align-items:center;gap:8px}.cue:after{content:"";width:1.5px;height:34px;background:linear-gradient(var(--ac),transparent);animation:cu 1.8s infinite}
+@keyframes cu{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.story{height:520vh;position:relative}.stage{position:sticky;top:0;height:100vh;overflow:hidden;color:var(--ink);transition:color .4s}.stage.night{color:#fff}
+.bgd,.bgn{position:absolute;inset:0}.bgd{background:linear-gradient(180deg,#dff1fe,#fff 75%)}.bgn{background:linear-gradient(180deg,#0b2540,#040c18);opacity:var(--n,0)}
+.bgn:after{content:"";position:absolute;inset:0;background:radial-gradient(1.5px 1.5px at 12% 18%,#fff,transparent),radial-gradient(1.5px 1.5px at 30% 60%,#fff,transparent),radial-gradient(1px 1px at 55% 25%,#fff,transparent),radial-gradient(1.5px 1.5px at 72% 70%,#fff,transparent),radial-gradient(1px 1px at 88% 20%,#fff,transparent),radial-gradient(1px 1px at 45% 85%,#fff,transparent);opacity:.8}
+.sg{position:relative;max-width:1120px;margin:0 auto;height:100%;padding:0 20px;display:grid;grid-template-columns:1fr 380px;gap:50px;align-items:center}
+@media(max-width:860px){.sg{grid-template-columns:1fr;gap:12px;align-content:center}.stage .clk{font-size:64px!important}}
+.clk{font:700 clamp(64px,11vw,150px)/.9 Inter,sans-serif;letter-spacing:-.06em;font-variant-numeric:tabular-nums;margin:6px 0 18px}
+.cap{font-size:clamp(17px,2vw,22px);max-width:480px;min-height:92px;opacity:.85}
+.cnt{display:inline-flex;align-items:center;gap:10px;margin-top:10px;background:rgba(255,255,255,.7);color:var(--ink);border:1px solid var(--line);padding:10px 18px;border-radius:99px;font-weight:600;font-size:14px}.cnt b{font-size:20px;color:#2f8fd8}
+.sp{background:#fff;border:1px solid var(--line);border-radius:32px;box-shadow:0 40px 90px -30px rgba(11,37,64,.45);overflow:hidden;color:var(--ink)}
+.sp .dh{padding:14px 18px}.sm{height:330px;padding:14px;display:flex;flex-direction:column;justify-content:flex-end;gap:9px;background:var(--soft);overflow:hidden}
+.sm .b{display:none;border:1px solid var(--line)}.sm .b.me{border:0}.sm .b.show{display:block;animation:pop .4s both}
+.pg{position:absolute;left:0;bottom:0;height:3px;width:var(--p,0%);background:linear-gradient(90deg,var(--ac),var(--ac2))}
+.demo{--ac2:color-mix(in srgb,var(--ac) 60%,#fff);--glow:color-mix(in srgb,var(--ac) 35%,transparent);max-width:400px;margin:0 auto;width:100%;background:#fff;border:1px solid var(--line);border-radius:32px;box-shadow:0 40px 90px -30px rgba(11,37,64,.4);overflow:hidden}
+.dh{background:linear-gradient(135deg,var(--ac),var(--ac2));color:var(--on,#0b2540);padding:18px 20px;display:flex;gap:12px;align-items:center}.dh .av{background:rgba(255,255,255,.35);color:inherit}.dh b{display:block;font-size:16px}.dh span{font-size:12px;opacity:.85}
+.dm{padding:16px;height:330px;overflow-y:auto;display:flex;flex-direction:column;gap:9px;background:var(--soft)}.dm .b{animation:pop .35s both}.dm .b.bot{background:#fff;border:1px solid var(--line)}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.ty{align-self:flex-start;background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px 14px;display:flex;gap:4px}.ty i{width:7px;height:7px;border-radius:50%;background:var(--mute);animation:bl 1s infinite}.ty i:nth-child(2){animation-delay:.15s}.ty i:nth-child(3){animation-delay:.3s}
+@keyframes bl{0%,80%,100%{opacity:.3}40%{opacity:1}}
+.bc{align-self:flex-start;background:#fff;border:1.5px solid var(--ac);border-radius:16px;padding:12px 16px;font-size:13px;animation:pop .4s both}.bc b{color:#2f8fd8;display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.dc{padding:12px 14px 16px;display:flex;flex-wrap:wrap;gap:8px;border-top:1px solid var(--line)}.dc button{padding:8px 13px;font-size:13px}
+.try{text-align:center}.try .chips{justify-content:center;margin-bottom:34px}.try p.s{margin-left:auto;margin-right:auto}
+.stack{max-width:1000px;margin:0 auto;padding:0 20px 14vh}
+.sc{position:sticky;top:calc(100px + var(--i)*24px);display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:36px;padding:48px;min-height:320px;margin-bottom:30vh;box-shadow:0 40px 80px -45px rgba(11,37,64,.45)}
+.sc:last-child{margin-bottom:0}.sc:nth-child(2){background:#eef7fe}.sc:nth-child(3){background:linear-gradient(135deg,#0b2540,#17406b);color:#fff;border-color:transparent}
+.sc .n{font:700 clamp(90px,14vw,170px)/.8 Inter;letter-spacing:-.07em;background:linear-gradient(180deg,#7cc8f7,#d6eefe);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sc h3{font-size:clamp(26px,3.6vw,42px);letter-spacing:-.04em;margin:0 0 12px;line-height:1.05}.sc p{font-size:18px;margin:0;color:var(--mute);max-width:460px}.sc:nth-child(3) p{color:rgba(255,255,255,.8)}
+@media(max-width:700px){.sc{grid-template-columns:1fr;gap:10px;padding:30px}}
+.band{background:linear-gradient(135deg,#0b2540,#17406b);color:#fff}.band .kick{color:#8fd3fb}.band p.s{color:rgba(255,255,255,.78)}
+.clock{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}@media(max-width:860px){.clock{grid-template-columns:1fr}}
+.big24{font:700 clamp(90px,15vw,180px)/.88 Inter,sans-serif;letter-spacing:-.07em;margin-bottom:18px;background:linear-gradient(90deg,#fff,#a8dcfa);-webkit-background-clip:text;background-clip:text;color:transparent}
+.panel{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:30px;padding:30px;backdrop-filter:blur(10px)}.time{font:700 54px/1 Inter;letter-spacing:-.04em;margin-bottom:18px}
+input[type=range]{padding:0;border:0;background:transparent;height:30px;box-shadow:none;accent-color:#8fd3fb}
+.st{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-top:1px solid rgba(255,255,255,.14);font-weight:500}.pl{padding:4px 12px;border-radius:99px;font-size:12px;font-weight:700}.pl.c{background:rgba(255,255,255,.16)}.pl.o{background:#a8dcfa;color:#0b2540}
+.say{margin-top:14px;background:rgba(255,255,255,.1);border-radius:16px;padding:14px 16px;font-size:15px;min-height:76px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}@media(max-width:860px){.g3{grid-template-columns:1fr}}
+.fc{background:#fff;border:1px solid var(--line);border-radius:28px;padding:32px;transition:.3s}.fc:hover{transform:translateY(-6px);border-color:var(--ac);box-shadow:0 30px 50px -30px var(--glow)}
+.fc em{font:italic 400 18px 'Instrument Serif',serif;color:#2f8fd8;display:block;margin-bottom:22px}.fc b{display:block;font-size:19px;margin-bottom:8px;letter-spacing:-.02em}.fc p{margin:0;color:var(--mute);font-size:15px}
+.cus{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}@media(max-width:860px){.cus{grid-template-columns:1fr}}
+.sw{display:flex;gap:10px;margin:8px 0 18px}.sw button{width:38px;height:38px;border-radius:50%;padding:0;border:3px solid #fff;box-shadow:0 0 0 1.5px var(--line);background:var(--c)}.sw button.on{box-shadow:0 0 0 2.5px var(--ink)}
+.pv{--ac2:color-mix(in srgb,var(--ac) 60%,#fff);--glow:color-mix(in srgb,var(--ac) 35%,transparent);background:#fff;border:1px solid var(--line);border-radius:30px;overflow:hidden;box-shadow:0 40px 80px -35px rgba(11,37,64,.4)}
+.pv .top{background:linear-gradient(135deg,var(--ac),var(--ac2));color:var(--on,#0b2540);padding:32px 24px;text-align:center}.pv .top h3{margin:8px 0 2px;font-size:28px;letter-spacing:-.03em}.pv .top span{font-size:13px;opacity:.85}.pv .logo{background:rgba(255,255,255,.35);border-color:rgba(255,255,255,.5)}
+.pv .bd{padding:22px}.pv .bd .chips{margin-bottom:16px}
+.mq{overflow:hidden;margin-bottom:14px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.mq div{display:flex;gap:14px;width:max-content;animation:mq 45s linear infinite}.mq.r div{animation-direction:reverse}.mq:hover div{animation-play-state:paused}@keyframes mq{to{transform:translateX(-50%)}}
+.mq span{background:#fff;border:1.5px solid var(--line);padding:16px 26px;border-radius:99px;font-weight:600;font-size:19px;white-space:nowrap;box-shadow:0 10px 24px -16px rgba(11,37,64,.3)}
+details{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px 24px;margin-bottom:12px}summary{cursor:pointer;font-weight:600;font-size:17px}details p{color:var(--mute);margin:10px 0 0}
+.fin{max-width:1120px;margin:0 auto;padding:0 20px 80px}.fin>div{position:relative;overflow:hidden;background:linear-gradient(135deg,#0b2540,#17406b);color:#fff;border-radius:40px;padding:100px 28px;text-align:center}
+.fin>div:before{content:"";position:absolute;width:520px;height:520px;border-radius:50%;background:#5ab4ee;filter:blur(110px);opacity:.35;top:-260px;right:-120px}
+.fin h2{position:relative}.fin p{position:relative;margin:0 auto 32px;max-width:520px;opacity:.85;font-size:19px}.fin button{position:relative;padding:18px 34px;font-size:17px;border-radius:99px}
+.foot{text-align:center;color:var(--mute);font-size:13px;padding:0 20px 40px}
+.js .rv{opacity:0;transform:translateY(34px);transition:opacity .8s,transform .8s cubic-bezier(.2,.7,.2,1)}.js .rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.orb,.mq div,.cue:after{animation:none}.js .rv{opacity:1;transform:none}}
+</style>
+</head><body>
+<div class="hero hide" id="hero"><div class="logo hide" id="logo"></div><div class="pill" id="pill">Online booking</div><h1 id="title">Book online</h1><p id="sub"></p></div>
+<div id="land" class="hide">
+<div class="nav"><div><div class="brand" onclick="location.hash=''"><i></i>Slotwise</div><a onclick="go('story')">A day with Slotwise</a><a onclick="go('try')">Try it</a><a onclick="go('brand')">Customize</a><a onclick="go('faq')">FAQ</a><button onclick="location.hash='admin'">Owner login</button></div></div>
+
+<div class="lhero"><div class="orb o1"></div><div class="orb o2"></div>
+  <div class="hin" id="hin"><span class="tag">AI receptionist and online booking</span>
+  <h1>The front desk that <span class="ser grad">never sleeps.</span></h1>
+  <p class="lead">Slotwise answers your customers, books their appointments, and keeps working nights, weekends, and holidays, so you never lose a booking.</p>
+  <div class="cta-row"><button onclick="location.hash='admin'">Set up my shop, free</button><button class="ghost" onclick="go('story')">Watch a day unfold</button></div>
+  <div class="trust"><span>Free during early access</span><span>Live in 5 minutes</span><span>Your own booking link</span></div></div>
+  <div class="cue">Scroll</div></div>
+
+<div class="story" id="story"><div class="stage" id="stage"><div class="bgd"></div><div class="bgn" id="bgn"></div>
+  <div class="sg"><div><div class="kick" style="color:inherit;opacity:.7">A day with Slotwise</div><div class="clk" id="clk">8:00 AM</div><div class="cap" id="cap"></div><div class="cnt">Bookings captured while you were away <b id="cn">0</b></div></div>
+  <div class="sp"><div class="dh"><div class="av">S</div><div><b>Your shop</b><span>Slotwise is online</span></div></div><div class="sm" id="sm"></div></div></div>
+  <div class="pg" id="pg"></div></div></div>
+
+<div class="lw" id="try"><div class="sec try"><div class="kick rv">Try it yourself</div><h2 class="t rv">Be the customer.</h2><p class="s rv">Pick a type of business, then tap a question. This is how your customers will experience Slotwise.</p>
+  <div class="chips rv" id="biz"></div>
+  <div class="demo rv" id="demo"><div class="dh"><div class="av" id="dAv">F</div><div><b id="dName">Fade Factory</b><span>Online now · replies in seconds</span></div></div><div class="dm" id="dm"></div><div class="dc" id="dc"></div></div></div></div>
+
+<div class="sec" style="padding-bottom:0"><div class="kick rv">How it works</div><h2 class="t rv">Live in three steps.</h2><p class="s rv">No developers and no complicated software.</p></div>
+<div class="stack"><div class="sc" style="--i:0"><div class="n">01</div><div><h3>Tell us about your business</h3><p>Add your hours, services, prices, and the questions customers always ask.</p></div></div>
+  <div class="sc" style="--i:1"><div class="n">02</div><div><h3>Make it yours</h3><p>Pick your colors, font, and logo. Your page looks like your brand, not ours.</p></div></div>
+  <div class="sc" style="--i:2"><div class="n">03</div><div><h3>Share your link</h3><p>Add it to your Instagram bio or Google profile. Customers can book and chat any time.</p></div></div></div>
+
+<div class="band" id="live"><div class="sec"><div class="clock"><div class="rv"><div class="kick">Always on</div><div class="big24">24/7</div>
+  <h2 class="t">Customers don’t book on your schedule.</h2><p class="s" style="margin-bottom:0">Most people send messages after hours, on weekends, or while you’re busy with a client. Drag the slider to see who’s covering your shop.</p></div>
+  <div class="panel rv"><div class="time" id="tm">11:47 PM</div><input type="range" id="sl" min="0" max="1439" value="1427" aria-label="Time of day">
+  <div class="st"><span>Your shop (open 10am to 7pm)</span><span class="pl c" id="s1">Closed</span></div><div class="st"><span>Slotwise</span><span class="pl o">Online</span></div>
+  <div class="say" id="say"></div></div></div></div></div>
+
+<div class="sec"><div class="kick rv">What you get</div><h2 class="t rv">One link. <span class="ser grad">Fewer missed customers.</span></h2><p class="s rv">Everything you need to take bookings without hiring anyone.</p>
+  <div class="g3"><div class="fc rv"><em>One</em><b>Online booking page</b><p>Customers pick a service, day, and time in seconds. Taken times disappear automatically.</p></div>
+  <div class="fc rv"><em>Two</em><b>AI receptionist</b><p>Answers questions about prices, hours, and policies, then books the appointment.</p></div>
+  <div class="fc rv"><em>Three</em><b>Your own brand</b><p>Custom colors, fonts, logo, tagline, and greeting. Your shop stays front and center.</p></div>
+  <div class="fc rv"><em>Four</em><b>No double-booking</b><p>A time can only be booked once, whether the customer uses the page or the chat.</p></div>
+  <div class="fc rv"><em>Five</em><b>Owner dashboard</b><p>See upcoming bookings, cancel in one tap, and update your services at any time.</p></div>
+  <div class="fc rv"><em>Six</em><b>Works on any phone</b><p>Customers don’t need to download an app. They just open your link.</p></div></div></div>
+
+<div class="lw" id="brand"><div class="sec"><div class="cus"><div class="rv"><div class="kick">Make it yours</div><h2 class="t">Your name. Your colors. <span class="ser grad">Your look.</span></h2><p class="s">Try it now. Type your business name, pick a color, and choose a font style.</p>
+  <label style="margin-top:0">Business name</label><input id="pvIn" value="Your Business" maxlength="28">
+  <label>Brand color</label><div class="sw" id="sw"></div>
+  <label style="margin-top:6px">Font style</label><div class="chips" id="fo"></div></div>
+  <div class="pv rv" id="pv" style="--ac:#5ab4ee"><div class="top"><div class="logo" id="pvL">Y</div><h3 id="pvN">Your Business</h3><span>Book online in seconds</span></div>
+  <div class="bd"><div class="chips"><button class="chip on">Tue 12</button><button class="chip">Wed 13</button><button class="chip">Thu 14</button></div><div class="chips" style="margin-bottom:18px"><button class="chip">10:00 AM</button><button class="chip on">11:30 AM</button><button class="chip">1:00 PM</button></div><button class="big" style="margin-top:0">Confirm booking</button></div></div></div></div></div>
+
+<div class="sec" style="padding-left:0;padding-right:0"><div style="padding:0 20px"><div class="kick rv">Who it’s for</div><h2 class="t rv">Any business that <span class="ser grad">takes appointments.</span></h2><p class="s rv">If customers book a time with you, Slotwise works for you.</p></div>
+  <div class="mq"><div id="r1"></div></div><div class="mq r"><div id="r2"></div></div></div>
+
+<div class="lw" id="faq"><div class="sec" style="max-width:820px"><div class="kick rv">Questions</div><h2 class="t rv">Good to know.</h2><p class="s"></p>
+  <details class="rv"><summary>Do my customers need an account?</summary><p>No. They open your link, pick a time, and enter their name and phone number.</p></details>
+  <details class="rv"><summary>What if the AI doesn’t know the answer?</summary><p>It answers only from the information you give it and never makes up prices or policies. If it’s unsure, it tells the customer that you will follow up.</p></details>
+  <details class="rv"><summary>Is it really free?</summary><p>Yes. Slotwise is free during early access, so you can try it with real customers.</p></details>
+  <details class="rv"><summary>Can I change my services and hours later?</summary><p>Yes. Update anything in your owner dashboard, and your booking page changes right away.</p></details></div></div>
+
+<div class="lw"><div class="fin"><div class="rv"><h2>Stop losing bookings <span class="ser" style="color:#a8dcfa">after hours.</span></h2><p>Set up your shop in about five minutes and get your own booking link.</p><button onclick="location.hash='admin'">Set up my shop, free</button></div></div>
+<div class="foot">© 2026 Slotwise. Booking and AI receptionist.</div></div>
+</div>
 
 <div id="cust" class="wrap hide">
   <section class="card"><h2>Book an appointment</h2><p class="sub2">Pick a service, a day, and a time. It takes 20 seconds.</p>
-    <label>① Service</label><select id="svc"></select>
-    <label>② Day</label><div class="chips" id="days"></div>
-    <label>③ Time</label><div class="chips" id="slots"><span class="hint">Choose a day first</span></div>
-    <label>④ Your details</label><input id="nm" autocomplete="name">
+    <label>1. Service</label><select id="svc"></select>
+    <label>2. Day</label><div class="chips" id="days"></div>
+    <label>3. Time</label><div class="chips" id="slots"><span class="hint">Choose a day first</span></div>
+    <label>4. Your details</label><input id="nm" autocomplete="name">
     <label style="margin-top:10px">Phone</label><input id="ph" inputmode="tel" autocomplete="tel">
     <div style="margin-top:16px"><button id="go" class="big">Confirm booking</button></div><div id="msg" class="msg"></div>
   </section>
@@ -66,7 +181,7 @@ button.ghost{background:transparent;color:var(--ac);border:1.5px solid var(--lin
     <div class="row"><input id="inp" placeholder="Any openings Saturday?"><button id="send">Send</button></div></div></section>
 </div>
 
-<div id="admin" class="solo hide"><div class="card">
+<div id="admin" class="solo hide"><div class="card"><button class="ghost" onclick="location.hash=''" style="margin-bottom:14px;padding:8px 14px">← Home</button>
   <div id="login"><h2>Owner login</h2><p class="hint">Use your email and a password (at least 6 characters). First time? Tap Create account.</p>
     <label>Email</label><input id="em" type="email" placeholder="you@shop.com" autocomplete="email">
     <label>Password</label><input id="pw" type="password" autocomplete="current-password">
@@ -74,7 +189,7 @@ button.ghost{background:transparent;color:var(--ac);border:1.5px solid var(--lin
   <div id="dash" class="hide"><h2>Your shop</h2>
     <label>Shop name</label><input id="a_name"><label>Link name (letters, no spaces)</label><input id="a_slug">
     <label>Tagline (shown under your name)</label><input id="a_tag" placeholder="Fresh cuts, friendly service">
-    <label>Logo (one emoji or 1-2 letters)</label><input id="a_logo" maxlength="4" placeholder="✂️">
+    <label>Logo (one emoji or 1-2 letters)</label><input id="a_logo" maxlength="4" placeholder="S">
     <label>Brand color</label><input id="a_color" type="color" style="height:48px;padding:4px">
     <label>Font style</label><select id="a_font"><option value="modern">Modern (Inter)</option><option value="elegant">Elegant (Playfair Display)</option><option value="friendly">Friendly (Poppins)</option><option value="bold">Bold (Montserrat)</option><option value="classic">Classic (DM Serif Display)</option></select>
     <label>Chat greeting (the first thing the AI says)</label><input id="a_wel" placeholder="Hi! How can I help you today?">
@@ -103,8 +218,8 @@ function renderSlots(){$("slots").innerHTML="";if(!selDay){$("slots").innerHTML=
   const s=slotsFor(selDay);if(!s.length)$("slots").innerHTML='<span class="hint">Fully booked</span>';s.forEach(t=>$("slots").appendChild(btn(fmt(t),t===selTime,()=>{selTime=t;renderSlots()})))}
 async function loadTaken(){const{data}=await sb.rpc("taken_slots",{s:slug});taken=data||[];renderSlots()}
 const FONTS={modern:["Inter","Inter"],elegant:["Playfair Display","Inter"],friendly:["Poppins","Poppins"],bold:["Montserrat","Inter"],classic:["DM Serif Display","DM Sans"]};
-function applyBrand(sh){const c=sh.color||"#6d5efc",r=document.documentElement.style,f=FONTS[sh.font]||FONTS.modern;
-  r.setProperty("--ac",c);r.setProperty("--ac2","color-mix(in srgb,"+c+" 60%,#ffffff)");r.setProperty("--glow",c+"47");
+function applyBrand(sh){const c=sh.color||"#5ab4ee",r=document.documentElement.style,f=FONTS[sh.font]||FONTS.modern;
+  r.setProperty("--ac",c);r.setProperty("--on",onColor(c));r.setProperty("--ac2","color-mix(in srgb,"+c+" 60%,#ffffff)");r.setProperty("--glow",c+"47");
   r.setProperty("--hero2","color-mix(in srgb,"+c+" 45%,#000)");r.setProperty("--hero1","color-mix(in srgb,"+c+" 14%,#000)");
   r.setProperty("--fh",'"'+f[0]+'"');r.setProperty("--fb",'"'+f[1]+'"');
   const l=document.createElement("link");l.rel="stylesheet";l.href="https://fonts.googleapis.com/css2?family="+f[0].replace(/ /g,"+")+":wght@400;600;700;800&family="+f[1].replace(/ /g,"+")+":wght@400;500;600;700&display=swap";document.head.appendChild(l);
@@ -136,8 +251,8 @@ async function startAdmin(){
   const{data:{session}}=await sb.auth.getSession();if(!session)return;
   $("login").classList.add("hide");$("dash").classList.remove("hide");
   const{data:s}=await sb.from("shops").select("*").eq("owner",session.user.id).maybeSingle();
-  const d=Object.assign({tagline:"",logo:"",color:"#6d5efc",font:"modern",welcome:""},s)||{};if(!s)Object.assign(d,{name:"",slug:"",open:10,close:19,closed:[0,1],tz:"America/Los_Angeles",services:[{n:"Appointment",p:25,m:30}],faq:""});
-  $("a_name").value=d.name;$("a_slug").value=d.slug;$("a_tag").value=d.tagline||"";$("a_logo").value=d.logo||"";$("a_color").value=d.color||"#6d5efc";$("a_font").value=d.font||"modern";$("a_wel").value=d.welcome||"";$("a_open").value=d.open;$("a_close").value=d.close;$("a_closed").value=d.closed.join(",");$("a_tz").value=d.tz;
+  const d=Object.assign({tagline:"",logo:"",color:"#5ab4ee",font:"modern",welcome:""},s)||{};if(!s)Object.assign(d,{name:"",slug:"",open:10,close:19,closed:[0,1],tz:"America/Los_Angeles",services:[{n:"Appointment",p:25,m:30}],faq:""});
+  $("a_name").value=d.name;$("a_slug").value=d.slug;$("a_tag").value=d.tagline||"";$("a_logo").value=d.logo||"";$("a_color").value=d.color||"#5ab4ee";$("a_font").value=d.font||"modern";$("a_wel").value=d.welcome||"";$("a_open").value=d.open;$("a_close").value=d.close;$("a_closed").value=d.closed.join(",");$("a_tz").value=d.tz;
   $("a_svc").value=d.services.map(x=>[x.n,x.p,x.m].join(" | ")).join("\n");$("a_faq").value=d.faq;
   $("save").onclick=async()=>{const row={owner:session.user.id,name:$("a_name").value.trim(),tagline:$("a_tag").value.trim(),logo:$("a_logo").value.trim(),color:$("a_color").value,font:$("a_font").value,welcome:$("a_wel").value.trim(),slug:$("a_slug").value.trim().toLowerCase().replace(/[^a-z0-9-]/g,""),open:+$("a_open").value,close:+$("a_close").value,
     closed:$("a_closed").value.split(",").map(x=>x.trim()).filter(x=>x!=="").map(Number),tz:$("a_tz").value.trim(),
@@ -150,7 +265,64 @@ async function startAdmin(){
       t.textContent=b.date+" "+fmt(b.time)+" · "+b.service+" · "+b.name+(b.phone?" · "+b.phone:"");const x=document.createElement("button");x.className="ghost";x.textContent="Cancel";
       x.onclick=async()=>{await sb.from("bookings").delete().eq("id",b.id);loadBk()};r.append(t,x);$("bks").appendChild(r)})}
   loadBk()}
-function route(){["land","cust","admin"].forEach(i=>$(i).classList.add("hide"));
-  if(slug)startCustomer();else if(location.hash==="#admin")startAdmin();else{$("land").classList.remove("hide");$("title").textContent="Booking + AI receptionist";$("sub").textContent="Built for any business that takes appointments.";$("pill").textContent="New"}}
+function route(){$("hero").classList.toggle("hide",!slug&&location.hash!=="#admin");["land","cust","admin"].forEach(i=>$(i).classList.add("hide"));
+  if(slug)startCustomer();else if(location.hash==="#admin")startAdmin();else{$("land").classList.remove("hide");$("title").textContent="Booking + AI receptionist";$("sub").textContent="Built for any business that takes appointments.";$("pill").textContent="Slotwise"}}
+const go=id=>document.getElementById(id).scrollIntoView({behavior:"smooth"});
+addEventListener("hashchange",()=>location.reload());
+document.documentElement.classList.add("js");
+function onColor(h){const n=parseInt(h.slice(1),16),r=n>>16,g=(n>>8)&255,b=n&255;return(.299*r+.587*g+.114*b)/255>.6?"#0b2540":"#ffffff"}
+function initLanding(){
+  const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add("in");io.unobserve(x.target)}}),{threshold:.12});
+  document.querySelectorAll(".rv").forEach(e=>io.observe(e));
+  const clamp=(v,a,b)=>Math.min(b,Math.max(a,v)),p2=n=>String(n).padStart(2,"0"),fmtT=m=>{m=((Math.round(m)%1440)+1440)%1440;const h=Math.floor(m/60);return((h%12)||12)+":"+p2(m%60)+(h<12?" AM":" PM")};
+  /* scroll story */
+  const EV=[[.07,"me","What time do you close today?"],[.1,"bot","We close at 7pm. Want me to hold a spot for you?"],[.38,"me","How much for a haircut and beard?"],[.41,"bot","$42 for both, about 45 minutes."],
+    [.6,"me","Any openings Saturday morning?"],[.63,"bot","Yes! 10:00am and 11:30am are open. Which works?"],[.7,"me","10am please, I’m Marcus"],[.73,"bot","Done, you’re booked for Saturday at 10:00am. See you then."],
+    [.9,"me","Can I move my Friday appointment to Thursday?"],[.93,"bot","Done. You’re now booked for Thursday at 2:00pm."]];
+  const sm=$("sm"),bubs=EV.map(([t,r,x])=>{const d=document.createElement("div");d.className="b "+r;d.textContent=x;sm.appendChild(d);return d});
+  const story=$("story"),stage=$("stage"),land=$("land"),hin=$("hin");
+  const CAP=[[.3,"Morning rush. You’re with a client, and Slotwise handles the messages."],[.5,"The shop closes at 7pm, but customers keep asking questions."],[.85,"It’s the middle of the night. You’re asleep, and Slotwise is still answering."],[2,"Morning. New bookings are already waiting for you."]];
+  function tick(){if(land.classList.contains("hide"))return;
+    const vh=innerHeight,y=scrollY,p1=clamp(y/(vh*.8),0,1);hin.style.transform="translateY("+(y*.3)+"px) scale("+(1-.1*p1)+")";hin.style.opacity=String(1-p1*1.15);
+    const r=story.getBoundingClientRect(),p=clamp(-r.top/(r.height-vh),0,1);
+    $("clk").textContent=fmtT(480+p*1440);$("bgn").style.setProperty("--n",clamp(1-Math.abs(p-.667)/.25,0,1));stage.classList.toggle("night",clamp(1-Math.abs(p-.667)/.25,0,1)>.5);
+    $("pg").style.setProperty("--p",(p*100)+"%");$("cap").textContent=CAP.find(c=>p<c[0])[1];
+    EV.forEach((e,i)=>bubs[i].classList.toggle("show",p>=e[0]));$("cn").textContent=(p>=.73?1:0)+(p>=.93?1:0)}
+  let q=false;addEventListener("scroll",()=>{if(!q){q=true;requestAnimationFrame(()=>{tick();q=false})}},{passive:true});addEventListener("resize",tick);tick();
+  /* demo */
+  const D={barber:{l:"Barber",n:"Fade Factory",c:"#5ab4ee",h:"Tuesday to Saturday, 10am to 7pm",a:["Haircut",30],b:["Beard trim",15]},
+    salon:{l:"Salon",n:"Studio Bloom",c:"#e11d48",h:"Tuesday to Saturday, 9am to 6pm",a:["Cut and color",95],b:["Blowout",45]},
+    clinic:{l:"Clinic",n:"Northside Dental",c:"#2563eb",h:"Monday to Friday, 8am to 5pm",a:["Cleaning",120],b:["Check-up",75]},
+    trainer:{l:"Trainer",n:"Ironline Fitness",c:"#ea580c",h:"Monday to Saturday, 6am to 8pm",a:["Personal session",60],b:["Group class",20]}};
+  const dm=$("dm"),dc=$("dc"),demo=$("demo");let cur="barber",busy=false;
+  const bub=(r,t)=>{const d=document.createElement("div");d.className="b "+r;d.textContent=t;dm.appendChild(d);dm.scrollTop=1e9};
+  const reply=(t,after)=>{busy=true;dc.querySelectorAll("button").forEach(b=>b.disabled=true);const y=document.createElement("div");y.className="ty";y.innerHTML="<i></i><i></i><i></i>";dm.appendChild(y);dm.scrollTop=1e9;
+    setTimeout(()=>{y.remove();bub("bot",t);if(after)after();busy=false;chips()},900)};
+  function chips(){const d=D[cur];dc.innerHTML="";
+    [["What are your hours?",()=>reply("We’re open "+d.h+". Would you like me to find you a time?")],
+     ["How much is a "+d.a[0].toLowerCase()+"?",()=>reply(d.a[0]+" is $"+d.a[1]+" and "+d.b[0].toLowerCase()+" is $"+d.b[1]+". Want to book one?")],
+     ["Book me Saturday at 10am",()=>reply("Done! You’re booked for Saturday at 10:00am for a "+d.a[0].toLowerCase()+". See you then.",()=>{const c=document.createElement("div");c.className="bc";c.innerHTML="<b>Booked</b>Saturday, 10:00 AM · "+d.a[0];dm.appendChild(c);dm.scrollTop=1e9})]
+    ].forEach(([t,f])=>{const b=document.createElement("button");b.className="chip";b.textContent=t;b.onclick=()=>{if(busy)return;bub("me",t);f()};dc.appendChild(b)})}
+  function setBiz(k){cur=k;const d=D[k];demo.style.setProperty("--ac",d.c);demo.style.setProperty("--on",onColor(d.c));$("dAv").textContent=d.n[0];$("dName").textContent=d.n;dm.innerHTML="";
+    document.querySelectorAll("#biz button").forEach(b=>b.classList.toggle("on",b.dataset.k===k));bub("bot","Hi, welcome to "+d.n+"! Ask me anything or tap a question below.");chips()}
+  Object.keys(D).forEach(k=>{const b=document.createElement("button");b.className="chip";b.dataset.k=k;b.textContent=D[k].l;b.onclick=()=>setBiz(k);$("biz").appendChild(b)});
+  setBiz("barber");
+  /* 24/7 slider */
+  const sl=$("sl");
+  function clock(){const m=+sl.value,open=m>=600&&m<1140;$("tm").textContent=fmtT(m);$("s1").textContent=open?"Open":"Closed";$("s1").className="pl "+(open?"o":"c");
+    $("say").textContent=open?"You’re busy with a client. Slotwise answers new messages and books appointments, so nobody waits.":"Your shop is closed, but a customer just asked about Saturday. Slotwise replied in seconds and booked them in."}
+  sl.oninput=clock;clock();
+  /* customizer */
+  const sw=$("sw"),pv=$("pv");["#5ab4ee","#0b2540","#e11d48","#ea580c","#16a34a"].forEach((c,i)=>{const b=document.createElement("button");b.style.setProperty("--c",c);b.className=i?"":"on";b.setAttribute("aria-label","Color "+c);
+    b.onclick=()=>{pv.style.setProperty("--ac",c);pv.style.setProperty("--on",onColor(c));sw.querySelectorAll("button").forEach(x=>x.classList.remove("on"));b.classList.add("on")};sw.appendChild(b)});
+  [["Modern","Inter"],["Elegant","'Playfair Display'"],["Friendly","Poppins"]].forEach(([n,f],i)=>{const b=document.createElement("button");b.className="chip"+(i?"":" on");b.textContent=n;
+    b.onclick=()=>{pv.style.fontFamily=f+",sans-serif";pv.querySelector("h3").style.fontFamily=f+",sans-serif";$("fo").querySelectorAll("button").forEach(x=>x.classList.remove("on"));b.classList.add("on")};$("fo").appendChild(b)});
+  $("pvIn").oninput=e=>{const v=e.target.value.trim()||"Your Business";$("pvN").textContent=v;$("pvL").textContent=v[0].toUpperCase()};
+  /* who it's for */
+  const R1=["💈 Barbers","💅 Salons","🧖 Spas","🏋️ Trainers","🦷 Clinics","🎓 Tutors"],R2=["🐶 Pet groomers","📸 Photographers","🧘 Studios","🧹 Cleaners","💼 Consultants","🔧 Mechanics"];
+  [["r1",R1],["r2",R2]].forEach(([id,a])=>{$(id).innerHTML=a.concat(a).map(t=>"<span>"+t+"</span>").join("")})
+}
+initLanding();
+
 route();
 </script></body></html>
