@@ -5,46 +5,64 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--bg:#f7f6f3;--card:#fff;--ink:#16161d;--mute:#6e6e7a;--line:#e7e5df;--ac:#4f46e5;--ac2:#7c3aed;--ok:#15803d;--bad:#c2410c;--bot:#f0eee8}
-@media(prefers-color-scheme:dark){:root{--bg:#0f0f14;--card:#181820;--ink:#f3f3f7;--mute:#9a9aa8;--line:#2a2a35;--ac:#818cf8;--ac2:#a78bfa;--ok:#4ade80;--bad:#fb923c;--bot:#22222c}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,system-ui,sans-serif}
-.hero{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;padding:38px 20px 70px;text-align:center}
-.hero h1{margin:0 0 6px;font-size:clamp(26px,5vw,38px);letter-spacing:-.02em}.hero p{margin:0;opacity:.9}
-.wrap{max-width:980px;margin:-44px auto 40px;padding:0 14px;display:grid;grid-template-columns:1.1fr 1fr;gap:16px}
-@media(max-width:780px){.wrap{grid-template-columns:1fr}}
-.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,.06)}
-h2{font-size:16px;margin:0 0 12px}label{display:block;font-size:12px;font-weight:600;color:var(--mute);margin:14px 0 6px;text-transform:uppercase;letter-spacing:.04em}
-input,textarea,select{width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit}
-input:focus,textarea:focus,select:focus{outline:2px solid var(--ac);border-color:transparent}
-textarea{min-height:90px}button{font:inherit;font-weight:600;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;background:var(--ac);color:#fff}
-button:hover{filter:brightness(1.08)}button:disabled{opacity:.5}
-button.chip{background:var(--bg);color:var(--ink);border:1px solid var(--line);padding:8px 12px;font-weight:500}
-button.chip.on{background:var(--ac);color:#fff;border-color:var(--ac)}button.ghost{background:transparent;color:var(--ac);border:1px solid var(--line)}
-.chips{display:flex;flex-wrap:wrap;gap:8px}.msg{font-size:14px;margin-top:10px}.ok{color:var(--ok)}.bad{color:var(--bad)}.hint{color:var(--mute);font-size:13px}
-.chat{height:420px;display:flex;flex-direction:column}.msgs{flex:1;overflow:auto;display:flex;flex-direction:column;gap:8px;padding-bottom:6px}
-.b{max-width:85%;padding:9px 13px;border-radius:18px;white-space:pre-wrap;font-size:14px}.b.me{align-self:flex-end;background:var(--ac);color:#fff;border-bottom-right-radius:4px}.b.bot{align-self:flex-start;background:var(--bot);border-bottom-left-radius:4px}
-.row{display:flex;gap:8px;margin-top:10px}.row input{flex:1}
-.bk{display:flex;justify-content:space-between;gap:10px;align-items:center;border-bottom:1px solid var(--line);padding:10px 0;font-size:14px}
-.solo{max-width:560px;margin:-44px auto 40px;padding:0 14px}.hide{display:none!important}
+:root{--bg:#f4f3ef;--card:#fff;--ink:#14141c;--mute:#6b6b78;--line:#e8e6df;--ac:#6d5efc;--ac2:#c04bff;--glow:rgba(109,94,252,.28);--ok:#15803d;--bad:#c2410c;--bot:#f1efe9;--hero1:#14122b;--hero2:#2a1b5e}
+@media(prefers-color-scheme:dark){:root{--bg:#0c0b12;--card:#16151f;--ink:#f4f3f8;--mute:#9b9aab;--line:#272633;--ac:#8b7dff;--ac2:#d46bff;--glow:rgba(139,125,255,.3);--ok:#4ade80;--bad:#fb923c;--bot:#201f2b;--hero1:#0c0b12;--hero2:#1e1647}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--fb,Inter),system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.hero{position:relative;overflow:hidden;background:radial-gradient(900px 400px at 80% -10%,rgba(192,75,255,.35),transparent),radial-gradient(700px 400px at 10% 0,rgba(109,94,252,.4),transparent),linear-gradient(160deg,var(--hero1),var(--hero2));color:#fff;padding:54px 20px 96px;text-align:center}
+.hero h1,h2{font-family:var(--fh,Inter),system-ui,sans-serif}.logo{width:64px;height:64px;border-radius:20px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);display:grid;place-items:center;font-size:32px;margin:0 auto 14px;backdrop-filter:blur(8px)}.hero h1{margin:0 0 8px;font-size:clamp(30px,6vw,50px);font-weight:800;letter-spacing:-.035em;line-height:1.08}
+.hero p{margin:0 auto;max-width:520px;color:rgba(255,255,255,.78);font-size:16px}
+.pill{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(8px);padding:5px 14px;border-radius:99px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.wrap{max-width:1020px;margin:-62px auto 48px;padding:0 16px;display:grid;grid-template-columns:1.1fr 1fr;gap:20px;position:relative}
+@media(max-width:800px){.wrap{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:26px;box-shadow:0 20px 50px -20px rgba(20,18,43,.35)}
+h2{font-size:18px;margin:0 0 4px;font-weight:700;letter-spacing:-.01em}
+.sub2{color:var(--mute);font-size:13px;margin:0 0 6px}
+label{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--mute);margin:20px 0 8px;text-transform:uppercase;letter-spacing:.06em}
+input,textarea,select{width:100%;background:var(--bg);color:var(--ink);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;font:inherit;transition:.15s}
+input:focus,textarea:focus,select:focus{outline:0;border-color:var(--ac);box-shadow:0 0 0 4px var(--glow)}
+textarea{min-height:90px}
+button{font:inherit;font-weight:700;border:0;border-radius:14px;padding:12px 20px;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--ac),var(--ac2));box-shadow:0 8px 20px -8px var(--glow);transition:.15s}
+button:hover{transform:translateY(-1px);filter:brightness(1.06)}button:active{transform:none}button:disabled{opacity:.5}
+button.chip{background:var(--bg);color:var(--ink);border:1.5px solid var(--line);padding:9px 14px;font-weight:600;box-shadow:none;border-radius:99px}
+button.chip:hover{border-color:var(--ac)}button.chip.on{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border-color:transparent;box-shadow:0 6px 16px -6px var(--glow)}
+button.ghost{background:transparent;color:var(--ac);border:1.5px solid var(--line);box-shadow:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.msg{font-size:14px;margin-top:12px;font-weight:500}.ok{color:var(--ok)}.bad{color:var(--bad)}.hint{color:var(--mute);font-size:13px}
+.big{width:100%;padding:15px;font-size:16px;margin-top:6px}
+.chat{height:440px;display:flex;flex-direction:column;margin-top:12px}.msgs{flex:1;overflow:auto;display:flex;flex-direction:column;gap:10px;padding:4px 2px 8px}
+.b{max-width:86%;padding:10px 14px;border-radius:20px;white-space:pre-wrap;font-size:14px}.b.me{align-self:flex-end;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border-bottom-right-radius:6px}.b.bot{align-self:flex-start;background:var(--bot);border-bottom-left-radius:6px}
+.row{display:flex;gap:8px;margin-top:10px}.row input{flex:1;border-radius:99px}.row button{border-radius:99px}
+.ai{display:flex;align-items:center;gap:12px}.av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));display:grid;place-items:center;color:#fff;font-weight:800;font-size:13px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px}
+.bk{display:flex;justify-content:space-between;gap:10px;align-items:center;border-bottom:1px solid var(--line);padding:12px 0;font-size:14px}
+.solo{max-width:600px;margin:-62px auto 48px;padding:0 16px;position:relative}.hide{display:none!important}
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0}
+@media(max-width:700px){.feats{grid-template-columns:1fr}}
+.feat{background:var(--bg);border:1px solid var(--line);border-radius:18px;padding:16px}.feat b{display:block;margin:6px 0 2px}.feat span{font-size:26px}
+.feat p{margin:0;color:var(--mute);font-size:13px}
 </style></head><body>
-<div class="hero"><h1 id="title">Book online</h1><p id="sub"></p></div>
+<div class="hero"><div class="logo hide" id="logo"></div><div class="pill" id="pill">Online booking</div><h1 id="title">Book online</h1><p id="sub"></p></div>
 
 <div id="land" class="solo hide"><div class="card">
-  <h2>Booking + AI receptionist for your shop</h2>
-  <p>Get your own booking page and an AI assistant that answers customers and books appointments for you. Set up takes about 5 minutes.</p>
-  <button onclick="location.hash='admin';route()">Set up my shop</button>
+  <h2>Never miss a booking again</h2>
+  <p class="sub2">Your own booking page, plus an AI receptionist that answers customers and books them in, 24/7.</p>
+  <div class="feats">
+    <div class="feat"><span>📅</span><b>Online booking</b><p>Customers pick a time in seconds.</p></div>
+    <div class="feat"><span>🤖</span><b>AI receptionist</b><p>Answers questions and books for you.</p></div>
+    <div class="feat"><span>⚡</span><b>5-minute setup</b><p>Add your hours and services. Done.</p></div>
+  </div>
+  <button class="big" onclick="location.hash='admin';route()">Set up my shop</button>
 </div></div>
 
 <div id="cust" class="wrap hide">
-  <section class="card"><h2>Book an appointment</h2>
-    <label>Service</label><select id="svc"></select>
-    <label>Day</label><div class="chips" id="days"></div>
-    <label>Time</label><div class="chips" id="slots"><span class="hint">Choose a day first</span></div>
-    <label>Your name</label><input id="nm" autocomplete="name">
-    <label>Phone</label><input id="ph" inputmode="tel" autocomplete="tel">
-    <div style="margin-top:16px"><button id="go">Confirm booking</button></div><div id="msg" class="msg"></div>
+  <section class="card"><h2>Book an appointment</h2><p class="sub2">Pick a service, a day, and a time. It takes 20 seconds.</p>
+    <label>① Service</label><select id="svc"></select>
+    <label>② Day</label><div class="chips" id="days"></div>
+    <label>③ Time</label><div class="chips" id="slots"><span class="hint">Choose a day first</span></div>
+    <label>④ Your details</label><input id="nm" autocomplete="name">
+    <label style="margin-top:10px">Phone</label><input id="ph" inputmode="tel" autocomplete="tel">
+    <div style="margin-top:16px"><button id="go" class="big">Confirm booking</button></div><div id="msg" class="msg"></div>
   </section>
-  <section class="card"><h2>Ask our assistant</h2><div class="chat"><div class="msgs" id="msgs"><div class="b bot">Hi! I can answer questions and book you in. What can I do for you?</div></div>
+  <section class="card"><div class="ai"><div class="av">AI</div><div><h2 style="margin:0">Ask our assistant</h2><div class="hint"><span class="dot"></span>Online · replies instantly</div></div></div><div class="chat"><div class="msgs" id="msgs"><div class="b bot" id="wel">Hi! I can answer questions and book you in. What can I do for you?</div></div>
     <div class="row"><input id="inp" placeholder="Any openings Saturday?"><button id="send">Send</button></div></div></section>
 </div>
 
@@ -55,6 +73,11 @@ button.chip.on{background:var(--ac);color:#fff;border-color:var(--ac)}button.gho
     <div style="margin-top:14px;display:flex;gap:8px"><button id="sin">Sign in</button><button id="sup" class="ghost">Create account</button></div><div id="lm" class="msg"></div></div>
   <div id="dash" class="hide"><h2>Your shop</h2>
     <label>Shop name</label><input id="a_name"><label>Link name (letters, no spaces)</label><input id="a_slug">
+    <label>Tagline (shown under your name)</label><input id="a_tag" placeholder="Fresh cuts, friendly service">
+    <label>Logo (one emoji or 1-2 letters)</label><input id="a_logo" maxlength="4" placeholder="✂️">
+    <label>Brand color</label><input id="a_color" type="color" style="height:48px;padding:4px">
+    <label>Font style</label><select id="a_font"><option value="modern">Modern (Inter)</option><option value="elegant">Elegant (Playfair Display)</option><option value="friendly">Friendly (Poppins)</option><option value="bold">Bold (Montserrat)</option><option value="classic">Classic (DM Serif Display)</option></select>
+    <label>Chat greeting (the first thing the AI says)</label><input id="a_wel" placeholder="Hi! How can I help you today?">
     <label>Opens (hour 0–23)</label><input id="a_open" type="number"><label>Closes (hour 0–23)</label><input id="a_close" type="number">
     <label>Closed days (0=Sun … 6=Sat)</label><input id="a_closed"><label>Time zone</label><input id="a_tz">
     <label>Services: Name | price | minutes (one per line)</label><textarea id="a_svc"></textarea>
@@ -79,10 +102,18 @@ function renderDays(){$("days").innerHTML="";const t=new Date();let n=0;for(let 
 function renderSlots(){$("slots").innerHTML="";if(!selDay){$("slots").innerHTML='<span class="hint">Choose a day first</span>';return}
   const s=slotsFor(selDay);if(!s.length)$("slots").innerHTML='<span class="hint">Fully booked</span>';s.forEach(t=>$("slots").appendChild(btn(fmt(t),t===selTime,()=>{selTime=t;renderSlots()})))}
 async function loadTaken(){const{data}=await sb.rpc("taken_slots",{s:slug});taken=data||[];renderSlots()}
+const FONTS={modern:["Inter","Inter"],elegant:["Playfair Display","Inter"],friendly:["Poppins","Poppins"],bold:["Montserrat","Inter"],classic:["DM Serif Display","DM Sans"]};
+function applyBrand(sh){const c=sh.color||"#6d5efc",r=document.documentElement.style,f=FONTS[sh.font]||FONTS.modern;
+  r.setProperty("--ac",c);r.setProperty("--ac2","color-mix(in srgb,"+c+" 60%,#ffffff)");r.setProperty("--glow",c+"47");
+  r.setProperty("--hero2","color-mix(in srgb,"+c+" 45%,#000)");r.setProperty("--hero1","color-mix(in srgb,"+c+" 14%,#000)");
+  r.setProperty("--fh",'"'+f[0]+'"');r.setProperty("--fb",'"'+f[1]+'"');
+  const l=document.createElement("link");l.rel="stylesheet";l.href="https://fonts.googleapis.com/css2?family="+f[0].replace(/ /g,"+")+":wght@400;600;700;800&family="+f[1].replace(/ /g,"+")+":wght@400;500;600;700&display=swap";document.head.appendChild(l);
+  if(sh.logo){$("logo").textContent=sh.logo;$("logo").classList.remove("hide")}
+  if(sh.welcome)$("wel").textContent=sh.welcome}
 async function startCustomer(){
   const{data}=await sb.from("shops").select("*").eq("slug",slug).maybeSingle();
   if(!data){$("title").textContent="Shop not found";return}
-  shop=data;document.title=shop.name;$("title").textContent=shop.name;$("sub").textContent="Book online in seconds";$("cust").classList.remove("hide");
+  shop=data;applyBrand(shop);document.title=shop.name;$("title").textContent=shop.name;$("sub").textContent=shop.tagline||"Book online in seconds, or chat with our assistant.";$("pill").textContent="Open for bookings";$("cust").classList.remove("hide");
   shop.services.forEach(s=>{const o=document.createElement("option");o.value=s.n;o.textContent=s.n+" · $"+s.p;$("svc").appendChild(o)});
   await loadTaken();renderDays();
   $("go").onclick=async()=>{const m=$("msg");m.className="msg";
@@ -105,10 +136,10 @@ async function startAdmin(){
   const{data:{session}}=await sb.auth.getSession();if(!session)return;
   $("login").classList.add("hide");$("dash").classList.remove("hide");
   const{data:s}=await sb.from("shops").select("*").eq("owner",session.user.id).maybeSingle();
-  const d=s||{name:"",slug:"",open:10,close:19,closed:[0,1],tz:"America/Los_Angeles",services:[{n:"Haircut",p:30,m:30}],faq:""};
-  $("a_name").value=d.name;$("a_slug").value=d.slug;$("a_open").value=d.open;$("a_close").value=d.close;$("a_closed").value=d.closed.join(",");$("a_tz").value=d.tz;
+  const d=Object.assign({tagline:"",logo:"",color:"#6d5efc",font:"modern",welcome:""},s)||{};if(!s)Object.assign(d,{name:"",slug:"",open:10,close:19,closed:[0,1],tz:"America/Los_Angeles",services:[{n:"Appointment",p:25,m:30}],faq:""});
+  $("a_name").value=d.name;$("a_slug").value=d.slug;$("a_tag").value=d.tagline||"";$("a_logo").value=d.logo||"";$("a_color").value=d.color||"#6d5efc";$("a_font").value=d.font||"modern";$("a_wel").value=d.welcome||"";$("a_open").value=d.open;$("a_close").value=d.close;$("a_closed").value=d.closed.join(",");$("a_tz").value=d.tz;
   $("a_svc").value=d.services.map(x=>[x.n,x.p,x.m].join(" | ")).join("\n");$("a_faq").value=d.faq;
-  $("save").onclick=async()=>{const row={owner:session.user.id,name:$("a_name").value.trim(),slug:$("a_slug").value.trim().toLowerCase().replace(/[^a-z0-9-]/g,""),open:+$("a_open").value,close:+$("a_close").value,
+  $("save").onclick=async()=>{const row={owner:session.user.id,name:$("a_name").value.trim(),tagline:$("a_tag").value.trim(),logo:$("a_logo").value.trim(),color:$("a_color").value,font:$("a_font").value,welcome:$("a_wel").value.trim(),slug:$("a_slug").value.trim().toLowerCase().replace(/[^a-z0-9-]/g,""),open:+$("a_open").value,close:+$("a_close").value,
     closed:$("a_closed").value.split(",").map(x=>x.trim()).filter(x=>x!=="").map(Number),tz:$("a_tz").value.trim(),
     services:$("a_svc").value.split("\n").map(l=>l.split("|").map(x=>x.trim())).filter(a=>a[0]).map(a=>({n:a[0],p:+a[1]||0,m:+a[2]||30})),faq:$("a_faq").value};
     if(s)row.id=s.id;const{error}=await sb.from("shops").upsert(row);
@@ -120,6 +151,6 @@ async function startAdmin(){
       x.onclick=async()=>{await sb.from("bookings").delete().eq("id",b.id);loadBk()};r.append(t,x);$("bks").appendChild(r)})}
   loadBk()}
 function route(){["land","cust","admin"].forEach(i=>$(i).classList.add("hide"));
-  if(slug)startCustomer();else if(location.hash==="#admin")startAdmin();else{$("land").classList.remove("hide");$("title").textContent="Booking + AI receptionist";$("sub").textContent="Built for small shops"}}
+  if(slug)startCustomer();else if(location.hash==="#admin")startAdmin();else{$("land").classList.remove("hide");$("title").textContent="Booking + AI receptionist";$("sub").textContent="Built for any business that takes appointments.";$("pill").textContent="New"}}
 route();
 </script></body></html>
