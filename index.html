@@ -178,7 +178,7 @@ details{background:#fff;border:1px solid var(--line);border-radius:20px;padding:
 
 <div class="sec" id="pricing"><div class="kick rv">Pricing</div><h2 class="t rv">One plan. <span class="ser grad">Everything included.</span></h2><p class="s rv">Pick monthly or yearly. Either way, you get the whole product.</p>
   <div class="pr rv"><div class="pl1"><div class="tg" id="tg"><button class="on" data-p="m">Monthly</button><button data-p="y">Yearly</button></div>
-  <div class="amt"><span id="pAmt">$55</span><small id="pPer">per month</small></div><div class="sv" id="pSv">Billed monthly. Switch to yearly and save $60 a year.</div><button class="big" id="payBtn">Subscribe</button><a class="already" onclick="location.hash='admin'">Already subscribed? Create your account</a></div>
+  <div class="amt"><span id="pAmt">$29</span><small id="pPer">per month</small></div><div class="sv" id="pSv">Billed monthly. Switch to yearly and save $58 a year.</div><button class="big" id="payBtn">Subscribe</button><a class="already" onclick="location.hash='admin'">Already subscribed? Create your account</a></div>
   <ul class="pl2"><li>Your own booking page and link</li><li>AI receptionist that answers and books</li><li>Custom colors, fonts, logo, and greeting</li><li>Owner dashboard to manage bookings</li><li>No double-booking, ever</li><li>Works on any phone, with no app to download</li></ul></div></div>
 
 <div class="lw" id="brand"><div class="sec"><div class="cus"><div class="rv"><div class="kick">Make it yours</div><h2 class="t">Your name. Your colors. <span class="ser grad">Your look.</span></h2><p class="s">Try it now. Type your business name, pick a color, and choose a font style.</p>
@@ -194,7 +194,7 @@ details{background:#fff;border:1px solid var(--line);border-radius:20px;padding:
 <div class="lw" id="faq"><div class="sec" style="max-width:820px"><div class="kick rv">Questions</div><h2 class="t rv">Good to know.</h2><p class="s"></p>
   <details class="rv"><summary>Do my customers need an account?</summary><p>No. They open your link, pick a time, and enter their name and phone number.</p></details>
   <details class="rv"><summary>What if the AI doesn’t know the answer?</summary><p>It answers only from the information you give it and never makes up prices or policies. If it’s unsure, it tells the customer that you will follow up.</p></details>
-  <details class="rv"><summary>How much does it cost?</summary><p>Hushdesk is $55 a month, or $600 a year, which works out to $50 a month. Everything is included in both plans.</p></details>
+  <details class="rv"><summary>How much does it cost?</summary><p>Hushdesk is $29 a month, or $290 a year, which works out to about $24 a month. Everything is included in both plans.</p></details>
   <details class="rv"><summary>Can I change my services and hours later?</summary><p>Yes. Update anything in your owner dashboard, and your booking page changes right away.</p></details></div></div>
 
 <div class="lw"><div class="fin"><div class="rv"><h2>Stop losing bookings <span class="ser" style="color:#a8dcfa">after hours.</span></h2><p>Set up your shop in about five minutes and get your own booking link.</p><button onclick="go('pricing')">Get started</button></div></div>
@@ -221,7 +221,7 @@ details{background:#fff;border:1px solid var(--line);border-radius:20px;padding:
     <div style="margin-top:14px;display:flex;gap:8px"><button id="sin">Sign in</button><button id="sup" class="ghost">Create account</button></div><div id="lm" class="msg"></div></div>
   <div id="dash" class="hide"><h2>Your shop</h2>
     <div id="linkbox" class="hide" style="margin:14px 0 6px;padding:16px;border:1.5px solid var(--ac);border-radius:18px;background:var(--soft)"><label style="margin-top:0">Your booking link</label><div class="row" style="margin-top:6px"><input id="lk" readonly><button id="lkc" class="ghost">Copy</button></div><div class="row"><button id="lko" style="flex:1">Open my page</button><button id="lks" class="ghost" style="flex:1">Share</button></div><p class="hint" style="margin:10px 0 0">Add this link to your Instagram bio and Google Business profile, or text it to customers.</p></div>
-    <div id="plan" class="hide" style="margin:10px 0 6px;padding:16px;border:1.5px solid var(--line);border-radius:18px"><label style="margin-top:0">Your plan</label><div class="chips pb" style="margin-top:8px"><button id="pm">Monthly: $55</button><button id="py" class="ghost">Yearly: $600</button></div><p class="hint" style="margin:10px 0 0" id="pn">The yearly plan saves $60.</p></div>
+    <div id="plan" class="hide" style="margin:10px 0 6px;padding:16px;border:1.5px solid var(--line);border-radius:18px"><label style="margin-top:0">Your plan</label><div class="chips pb" style="margin-top:8px"><button id="pm">Monthly: $29</button><button id="py" class="ghost">Yearly: $290</button></div><p class="hint" style="margin:10px 0 0" id="pn">The yearly plan saves $58.</p></div>
     <label>Shop name</label><input id="a_name"><label>Link name (letters, no spaces)</label><input id="a_slug">
     <label>Tagline (shown under your name)</label><input id="a_tag" placeholder="Fresh cuts, friendly service">
     <label>Logo (one emoji or 1-2 letters)</label><input id="a_logo" maxlength="4" placeholder="S">
@@ -372,7 +372,7 @@ function initLanding(){
   const io2=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting)dd.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.id===x.target.id))}),{rootMargin:"-45% 0px -50% 0px"});
   SEC.forEach(([id])=>{const e=document.getElementById(id);if(e)io2.observe(e)});
   $("payBtn").onclick=()=>{const y=document.querySelector("#tg .on").dataset.p==="y",u=y?STRIPE_YEARLY:STRIPE_MONTHLY;if(u)location.href=u;else $("pSv").textContent="Online payments are being set up. Please check back soon."};
-  const PR={m:["$55","per month","Billed monthly. Switch to yearly and save $60 a year."],y:["$600","per year","That’s $50 a month. You save $60 compared to paying monthly."]};
+  const PR={m:["$29","per month","Billed monthly. Switch to yearly and save $58 a year."],y:["$290","per year","That’s about $24 a month. You save $58 compared to paying monthly."]};
   document.querySelectorAll("#tg button").forEach(b=>b.onclick=()=>{document.querySelectorAll("#tg button").forEach(x=>x.classList.toggle("on",x===b));const v=PR[b.dataset.p];$("pAmt").textContent=v[0];$("pPer").textContent=v[1];$("pSv").textContent=v[2]});
   /* who it's for */
   const R1=["💈 Barbers","💅 Salons","🧖 Spas","🏋️ Trainers","🦷 Clinics","🎓 Tutors"],R2=["🐶 Pet groomers","📸 Photographers","🧘 Studios","🧹 Cleaners","💼 Consultants","🔧 Mechanics"];
