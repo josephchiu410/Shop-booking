@@ -126,18 +126,27 @@ details{background:#fff;border:1px solid var(--line);border-radius:20px;padding:
 .dotrow{display:flex;gap:8px;margin-top:22px}.dotrow i{width:28px;height:28px;border-radius:50%;background:var(--c)}
 .slots{display:flex;gap:6px;margin-top:22px;flex-wrap:wrap}.slots i{font-style:normal;font-size:12px;font-weight:600;padding:6px 11px;border-radius:99px;border:1.5px solid var(--line)}.slots i.x{text-decoration:line-through;color:#9bb0c4;background:var(--soft)}
 .lines{margin-top:22px;display:grid;gap:8px}.lines i{height:10px;border-radius:6px;background:var(--bot)}.lines i:nth-child(1){width:90%}.lines i:nth-child(2){width:64%}.lines i:nth-child(3){width:78%}
+
+.nav a+a{margin-left:0!important}
+.pr{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:860px){.pr{grid-template-columns:1fr}}
+.pl1{background:linear-gradient(135deg,#0b2540,#17406b);color:#fff;border-radius:34px;padding:40px}.pl2{list-style:none;margin:0;padding:34px 38px;background:#fff;border:1px solid var(--line);border-radius:34px;display:grid;align-content:center;gap:16px;font-size:17px;font-weight:500}
+.pl2 li:before{content:"✓";color:#2f8fd8;font-weight:800;margin-right:12px}
+.tg{display:inline-flex;background:rgba(255,255,255,.12);border-radius:99px;padding:4px;margin-bottom:26px}.tg button{background:transparent;box-shadow:none;color:#fff;padding:9px 20px;border-radius:99px}.tg button:hover{transform:none}.tg button.on{background:#fff;color:#0b2540}
+.amt{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}.amt span{font:700 clamp(64px,9vw,96px)/1 Inter;letter-spacing:-.06em}.amt small{font-size:18px;opacity:.75}
+.sv{opacity:.8;margin-bottom:28px;min-height:48px}.pl1 .big{margin-top:0;background:#fff;color:#0b2540;border-radius:99px}.pl1 .big:hover{background:#d6eefe}
+.already{display:block;margin-top:16px;text-align:center;opacity:.8;cursor:pointer;font-size:14px;text-decoration:underline}
 </style>
 </head><body>
 <div class="hero hide" id="hero"><div class="logo hide" id="logo"></div><div class="pill" id="pill">Online booking</div><h1 id="title">Book online</h1><p id="sub"></p></div>
 <div id="land" class="hide">
-<div class="nav"><div><div class="brand" onclick="location.hash=''"><i></i>Hushdesk</div><a onclick="location.hash='admin'">Owner login</a><button onclick="location.hash='admin'">Get started</button></div></div>
+<div class="nav"><div><div class="brand" onclick="location.hash=''"><i></i>Hushdesk</div><a onclick="go('pricing')">Pricing</a><a onclick="location.hash='admin'">Owner login</a><button onclick="go('pricing')">Get started</button></div></div>
 <div class="dots" id="dots"></div>
 <div class="lhero" id="top"><div class="dial"><svg viewBox="0 0 600 600"><circle cx="300" cy="300" r="286" fill="none" stroke="#a9d7f5" stroke-width="12" stroke-dasharray="2 27.9"/><circle cx="300" cy="300" r="238" fill="none" stroke="#d3eafb" stroke-width="1.5"/><circle cx="300" cy="300" r="190" fill="none" stroke="#d3eafb" stroke-width="1.5"/><circle cx="300" cy="300" r="142" fill="none" stroke="#e4f2fd" stroke-width="1.5"/></svg></div>
   <div class="hin" id="hin"><div class="hl"><div class="eyebrow">AI receptionist and online booking</div>
   <h1>Your shop closes. <span class="ser grad">Your front desk doesn’t.</span></h1>
   <p class="lead">Hushdesk answers your customers and books their appointments while you sleep, work, or take a day off.</p>
-  <div class="cta-row"><button onclick="location.hash='admin'">Set up my shop, free</button><a class="lnk" onclick="go('story')">See a day at the shop ↓</a></div>
-  <p class="fine">Free during early access. Live in about five minutes.</p>
+  <div class="cta-row"><button onclick="go('pricing')">Get started</button><a class="lnk" onclick="go('story')">See a day at the shop ↓</a></div>
+  <p class="fine">Live in about five minutes, with your own booking link.</p>
   <div class="tryrow"><small>Try it as a customer of a</small><div class="chips" id="biz"></div></div></div>
   <div class="demo" id="demo"><div class="dh"><div class="av" id="dAv">F</div><div><b id="dName">Fade Factory</b><span>Online now · replies in seconds</span></div></div><div class="dm" id="dm"></div><div class="dc" id="dc"></div></div></div></div>
 
@@ -167,6 +176,11 @@ details{background:#fff;border:1px solid var(--line);border-radius:20px;padding:
   <div class="bt dark s6 rv" style="min-height:200px"><div><b style="font-size:clamp(24px,3.4vw,40px)">Works on any phone.</b><p>Customers don’t download an app. They just open your link.</p></div></div>
   </div></div>
 
+<div class="sec" id="pricing"><div class="kick rv">Pricing</div><h2 class="t rv">One plan. <span class="ser grad">Everything included.</span></h2><p class="s rv">Pick monthly or yearly. Either way, you get the whole product.</p>
+  <div class="pr rv"><div class="pl1"><div class="tg" id="tg"><button class="on" data-p="m">Monthly</button><button data-p="y">Yearly</button></div>
+  <div class="amt"><span id="pAmt">$55</span><small id="pPer">per month</small></div><div class="sv" id="pSv">Billed monthly. Switch to yearly and save $60 a year.</div><button class="big" id="payBtn">Subscribe</button><a class="already" onclick="location.hash='admin'">Already subscribed? Create your account</a></div>
+  <ul class="pl2"><li>Your own booking page and link</li><li>AI receptionist that answers and books</li><li>Custom colors, fonts, logo, and greeting</li><li>Owner dashboard to manage bookings</li><li>No double-booking, ever</li><li>Works on any phone, with no app to download</li></ul></div></div>
+
 <div class="lw" id="brand"><div class="sec"><div class="cus"><div class="rv"><div class="kick">Make it yours</div><h2 class="t">Your name. Your colors. <span class="ser grad">Your look.</span></h2><p class="s">Try it now. Type your business name, pick a color, and choose a font style.</p>
   <label style="margin-top:0">Business name</label><input id="pvIn" value="Your Business" maxlength="28">
   <label>Brand color</label><div class="sw" id="sw"></div>
@@ -180,10 +194,10 @@ details{background:#fff;border:1px solid var(--line);border-radius:20px;padding:
 <div class="lw" id="faq"><div class="sec" style="max-width:820px"><div class="kick rv">Questions</div><h2 class="t rv">Good to know.</h2><p class="s"></p>
   <details class="rv"><summary>Do my customers need an account?</summary><p>No. They open your link, pick a time, and enter their name and phone number.</p></details>
   <details class="rv"><summary>What if the AI doesn’t know the answer?</summary><p>It answers only from the information you give it and never makes up prices or policies. If it’s unsure, it tells the customer that you will follow up.</p></details>
-  <details class="rv"><summary>Is it really free?</summary><p>Yes. Hushdesk is free during early access, so you can try it with real customers.</p></details>
+  <details class="rv"><summary>How much does it cost?</summary><p>Hushdesk is $55 a month, or $600 a year, which works out to $50 a month. Everything is included in both plans.</p></details>
   <details class="rv"><summary>Can I change my services and hours later?</summary><p>Yes. Update anything in your owner dashboard, and your booking page changes right away.</p></details></div></div>
 
-<div class="lw"><div class="fin"><div class="rv"><h2>Stop losing bookings <span class="ser" style="color:#a8dcfa">after hours.</span></h2><p>Set up your shop in about five minutes and get your own booking link.</p><button onclick="location.hash='admin'">Set up my shop, free</button></div></div>
+<div class="lw"><div class="fin"><div class="rv"><h2>Stop losing bookings <span class="ser" style="color:#a8dcfa">after hours.</span></h2><p>Set up your shop in about five minutes and get your own booking link.</p><button onclick="go('pricing')">Get started</button></div></div>
 <div class="foot">© 2026 Hushdesk. Booking and AI receptionist.</div></div>
 </div>
 
@@ -201,11 +215,13 @@ details{background:#fff;border:1px solid var(--line);border-radius:20px;padding:
 </div>
 
 <div id="admin" class="solo hide"><div class="card"><button class="ghost" onclick="location.hash=''" style="margin-bottom:14px;padding:8px 14px">← Home</button>
-  <div id="login"><h2>Owner login</h2><p class="hint">Use your email and a password (at least 6 characters). First time? Tap Create account.</p>
+  <div id="login"><h2>Owner login</h2><p class="hint">Use your email and a password (at least 6 characters). Paid already? Create your account with the same email you used to pay. Returning owner? Sign in.</p>
     <label>Email</label><input id="em" type="email" placeholder="you@shop.com" autocomplete="email">
     <label>Password</label><input id="pw" type="password" autocomplete="current-password">
     <div style="margin-top:14px;display:flex;gap:8px"><button id="sin">Sign in</button><button id="sup" class="ghost">Create account</button></div><div id="lm" class="msg"></div></div>
   <div id="dash" class="hide"><h2>Your shop</h2>
+    <div id="linkbox" class="hide" style="margin:14px 0 6px;padding:16px;border:1.5px solid var(--ac);border-radius:18px;background:var(--soft)"><label style="margin-top:0">Your booking link</label><div class="row" style="margin-top:6px"><input id="lk" readonly><button id="lkc" class="ghost">Copy</button></div><div class="row"><button id="lko" style="flex:1">Open my page</button><button id="lks" class="ghost" style="flex:1">Share</button></div><p class="hint" style="margin:10px 0 0">Add this link to your Instagram bio and Google Business profile, or text it to customers.</p></div>
+    <div id="plan" class="hide" style="margin:10px 0 6px;padding:16px;border:1.5px solid var(--line);border-radius:18px"><label style="margin-top:0">Your plan</label><div class="chips pb" style="margin-top:8px"><button id="pm">Monthly: $55</button><button id="py" class="ghost">Yearly: $600</button></div><p class="hint" style="margin:10px 0 0" id="pn">The yearly plan saves $60.</p></div>
     <label>Shop name</label><input id="a_name"><label>Link name (letters, no spaces)</label><input id="a_slug">
     <label>Tagline (shown under your name)</label><input id="a_tag" placeholder="Fresh cuts, friendly service">
     <label>Logo (one emoji or 1-2 letters)</label><input id="a_logo" maxlength="4" placeholder="S">
@@ -226,7 +242,7 @@ const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY),$=i=>document.getEleme
 const ds=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
 const fmt=t=>{const[h,m]=t.split(":").map(Number);return(h%12||12)+":"+pad(m)+(h<12?"am":"pm")};
 let shop,taken=[],selDay,selTime,hist=[],busy=false;
-const slug=new URLSearchParams(location.search).get("shop");
+const ps=location.pathname.replace(/^\/+|\/+$/g,"");let slug=new URLSearchParams(location.search).get("shop");const STRIPE_MONTHLY="",STRIPE_YEARLY="",STRIPE_PORTAL="";
 const step=()=>Math.min(...shop.services.map(s=>s.m||30));
 function slotsFor(date){const o=[],now=new Date();for(let m=shop.open*60;m+step()<=shop.close*60;m+=step()){const t=pad(Math.floor(m/60))+":"+pad(m%60);
   if(date===ds(now)&&m<=now.getHours()*60+now.getMinutes())continue;if(taken.some(x=>x.date===date&&x.time===t))continue;o.push(t)}return o}
@@ -266,25 +282,38 @@ async function startAdmin(){
   $("admin").classList.remove("hide");$("title").textContent="Owner dashboard";$("sub").textContent="";
   const done=r=>{if(r.error){$("lm").className="msg bad";$("lm").textContent=r.error.message}else if(r.data&&r.data.session)location.reload();else{$("lm").className="msg";$("lm").textContent="Account created. Now tap Sign in."}};
   $("sin").onclick=async()=>done(await sb.auth.signInWithPassword({email:$("em").value.trim(),password:$("pw").value}));
-  $("sup").onclick=async()=>done(await sb.auth.signUp({email:$("em").value.trim(),password:$("pw").value}));
+  $("sup").onclick=async()=>{const em=$("em").value.trim();$("lm").className="msg";$("lm").textContent="";
+    let ok=false;try{const r=await sb.rpc("email_paid",{e:em});ok=!!r.data}catch(x){}
+    if(!ok){$("lm").className="msg bad";$("lm").innerHTML='We couldn’t find a payment for that email. Subscribe first, then come back here to create your account. <a href="/" style="color:var(--ac);font-weight:700">See pricing</a>';return}
+    done(await sb.auth.signUp({email:em,password:$("pw").value}))};
   const{data:{session}}=await sb.auth.getSession();if(!session)return;
   $("login").classList.add("hide");$("dash").classList.remove("hide");
   const{data:s}=await sb.from("shops").select("*").eq("owner",session.user.id).maybeSingle();
   const d=Object.assign({tagline:"",logo:"",color:"#5ab4ee",font:"modern",welcome:""},s)||{};if(!s)Object.assign(d,{name:"",slug:"",open:10,close:19,closed:[0,1],tz:"America/Los_Angeles",services:[{n:"Appointment",p:25,m:30}],faq:""});
   $("a_name").value=d.name;$("a_slug").value=d.slug;$("a_tag").value=d.tagline||"";$("a_logo").value=d.logo||"";$("a_color").value=d.color||"#5ab4ee";$("a_font").value=d.font||"modern";$("a_wel").value=d.welcome||"";$("a_open").value=d.open;$("a_close").value=d.close;$("a_closed").value=d.closed.join(",");$("a_tz").value=d.tz;
   $("a_svc").value=d.services.map(x=>[x.n,x.p,x.m].join(" | ")).join("\n");$("a_faq").value=d.faq;
+  function showLink(sl){if(!sl)return;const u=location.origin+"/"+sl;$("lk").value=u;$("linkbox").classList.remove("hide");
+    $("lkc").onclick=async()=>{try{await navigator.clipboard.writeText(u)}catch(e){$("lk").select();document.execCommand("copy")}$("lkc").textContent="Copied";setTimeout(()=>$("lkc").textContent="Copy",1800)};
+    $("lko").onclick=()=>window.open(u,"_blank");$("lks").onclick=()=>{if(navigator.share)navigator.share({title:$("a_name").value,url:u});else $("lkc").click()}}
+  (async function(){$("plan").classList.remove("hide");const em=session.user.email||"",e=encodeURIComponent(em),id=session.user.id,mk=b=>b+(b.includes("?")?"&":"?")+"prefilled_email="+e+"&client_reference_id="+id;
+    let paid=false;try{const r=await sb.rpc("email_paid",{e:em});paid=!!r.data}catch(x){}
+    if(paid){$("pm").classList.add("hide");$("py").classList.add("hide");$("pn").innerHTML="Your subscription is active."+(STRIPE_PORTAL?' <a href="'+STRIPE_PORTAL+'" style="color:var(--ac);font-weight:700">Manage billing</a>':"");return}
+    if(!STRIPE_MONTHLY&&!STRIPE_YEARLY){$("pm").classList.add("hide");$("py").classList.add("hide");$("pn").textContent="Your subscription is not active, and online payments are not connected yet.";return}
+    $("pn").textContent="Your subscription is not active. Subscribe to publish your booking page.";
+    $("pm").onclick=()=>{location.href=mk(STRIPE_MONTHLY)};$("py").onclick=()=>{location.href=mk(STRIPE_YEARLY)}})();
+  if(s)showLink(s.slug);
   $("save").onclick=async()=>{const row={owner:session.user.id,name:$("a_name").value.trim(),tagline:$("a_tag").value.trim(),logo:$("a_logo").value.trim(),color:$("a_color").value,font:$("a_font").value,welcome:$("a_wel").value.trim(),slug:$("a_slug").value.trim().toLowerCase().replace(/[^a-z0-9-]/g,""),open:+$("a_open").value,close:+$("a_close").value,
     closed:$("a_closed").value.split(",").map(x=>x.trim()).filter(x=>x!=="").map(Number),tz:$("a_tz").value.trim(),
     services:$("a_svc").value.split("\n").map(l=>l.split("|").map(x=>x.trim())).filter(a=>a[0]).map(a=>({n:a[0],p:+a[1]||0,m:+a[2]||30})),faq:$("a_faq").value};
-    if(s)row.id=s.id;const{error}=await sb.from("shops").upsert(row);
-    $("am").innerHTML="";const m=$("am");m.className="msg "+(error?"bad":"ok");m.textContent=error?error.message:"Saved. Your booking link: "+location.origin+"/?shop="+row.slug;loadBk()};
+    if(s)row.id=s.id;if(!row.slug||["api","admin","index","login","pricing"].includes(row.slug)){$("am").className="msg bad";$("am").textContent="Please choose a different link name.";return}const{error}=await sb.from("shops").upsert(row);
+    $("am").innerHTML="";const m=$("am");m.className="msg "+(error?"bad":"ok");m.textContent=error?(/row-level/.test(error.message)?"An active subscription is required to save your shop.":error.message):"Saved.";if(!error)showLink(row.slug);loadBk()};
   async function loadBk(){const{data:sh}=await sb.from("shops").select("id").eq("owner",session.user.id).maybeSingle();if(!sh)return;
     const{data}=await sb.from("bookings").select("*").eq("shop_id",sh.id).gte("date",ds(new Date())).order("date").order("time");
     $("bks").innerHTML=(data&&data.length)?"":"None yet.";(data||[]).forEach(b=>{const r=document.createElement("div");r.className="bk";const t=document.createElement("span");
       t.textContent=b.date+" "+fmt(b.time)+" · "+b.service+" · "+b.name+(b.phone?" · "+b.phone:"");const x=document.createElement("button");x.className="ghost";x.textContent="Cancel";
       x.onclick=async()=>{await sb.from("bookings").delete().eq("id",b.id);loadBk()};r.append(t,x);$("bks").appendChild(r)})}
   loadBk()}
-function route(){$("hero").classList.toggle("hide",!slug&&location.hash!=="#admin");["land","cust","admin"].forEach(i=>$(i).classList.add("hide"));
+async function route(){if(!slug&&/^[a-z0-9-]{2,40}$/i.test(ps)&&ps.toLowerCase()!=="index"&&location.hash!=="#admin"){try{const{data}=await sb.from("shops").select("id").eq("slug",ps.toLowerCase()).maybeSingle();if(data)slug=ps.toLowerCase()}catch(e){}}$("hero").classList.toggle("hide",!slug&&location.hash!=="#admin");["land","cust","admin"].forEach(i=>$(i).classList.add("hide"));
   if(slug)startCustomer();else if(location.hash==="#admin")startAdmin();else{$("land").classList.remove("hide");$("title").textContent="Booking + AI receptionist";$("sub").textContent="Built for any business that takes appointments.";$("pill").textContent="Hushdesk"}}
 const go=id=>document.getElementById(id).scrollIntoView({behavior:"smooth"});
 addEventListener("hashchange",()=>location.reload());
@@ -338,10 +367,13 @@ function initLanding(){
     b.onclick=()=>{pv.style.fontFamily=f+",sans-serif";pv.querySelector("h3").style.fontFamily=f+",sans-serif";$("fo").querySelectorAll("button").forEach(x=>x.classList.remove("on"));b.classList.add("on")};$("fo").appendChild(b)});
   $("pvIn").oninput=e=>{const v=e.target.value.trim()||"Your Business";$("pvN").textContent=v;$("pvL").textContent=v[0].toUpperCase()};
 
-  const SEC=[["top","Top"],["story","A day"],["how","How it works"],["live","24/7"],["feat","Features"],["brand","Customize"],["faq","FAQ"]],dd=$("dots");
+  const SEC=[["top","Top"],["story","A day"],["how","How it works"],["live","24/7"],["feat","Features"],["pricing","Pricing"],["brand","Customize"],["faq","FAQ"]],dd=$("dots");
   SEC.forEach(([id,t])=>{const b=document.createElement("button");b.title=t;b.setAttribute("aria-label",t);b.onclick=()=>go(id);b.dataset.id=id;dd.appendChild(b)});
   const io2=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting)dd.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.id===x.target.id))}),{rootMargin:"-45% 0px -50% 0px"});
   SEC.forEach(([id])=>{const e=document.getElementById(id);if(e)io2.observe(e)});
+  $("payBtn").onclick=()=>{const y=document.querySelector("#tg .on").dataset.p==="y",u=y?STRIPE_YEARLY:STRIPE_MONTHLY;if(u)location.href=u;else $("pSv").textContent="Online payments are being set up. Please check back soon."};
+  const PR={m:["$55","per month","Billed monthly. Switch to yearly and save $60 a year."],y:["$600","per year","That’s $50 a month. You save $60 compared to paying monthly."]};
+  document.querySelectorAll("#tg button").forEach(b=>b.onclick=()=>{document.querySelectorAll("#tg button").forEach(x=>x.classList.toggle("on",x===b));const v=PR[b.dataset.p];$("pAmt").textContent=v[0];$("pPer").textContent=v[1];$("pSv").textContent=v[2]});
   /* who it's for */
   const R1=["💈 Barbers","💅 Salons","🧖 Spas","🏋️ Trainers","🦷 Clinics","🎓 Tutors"],R2=["🐶 Pet groomers","📸 Photographers","🧘 Studios","🧹 Cleaners","💼 Consultants","🔧 Mechanics"];
   [["r1",R1],["r2",R2]].forEach(([id,a])=>{$(id).innerHTML=a.concat(a).map(t=>"<span>"+t+"</span>").join("")})
